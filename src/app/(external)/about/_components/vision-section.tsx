@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 
 export function VisionSection() {
   return (
@@ -24,7 +25,7 @@ export function VisionSection() {
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="space-y-5"
         >
           <h2 className="text-3xl font-bold md:text-4xl">
@@ -35,8 +36,8 @@ export function VisionSection() {
             needs, ensuring that our services not only meet but exceed your
             expectations, bringing the best results for your satisfaction.
           </p>
-          <Button className="bg-[#EE4312] text-white hover:bg-[#cf3a10]">
-            Collaborate with Us
+          <Button asChild className="bg-[#EE4312] text-white hover:bg-[#cf3a10]">
+            <Link href="/contact">Collaborate with Us</Link>
           </Button>
         </motion.div>
 
@@ -44,7 +45,7 @@ export function VisionSection() {
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.4, ease: "easeOut", delay: 0.1 }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
           className="relative"
         >
           <div className="absolute inset-0 left-4 -bottom-4 rounded-3xl border border-[#EE4312]/70" />

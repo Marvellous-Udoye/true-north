@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
@@ -14,12 +15,13 @@ const stats = [
 export function HeroSection() {
   return (
     <section id="hero" className="relative overflow-hidden bg-white">
-      <div className="relative mx-auto flex max-w-7xl flex-col gap-14 px-4 pb-16 pt-10 md:px-10 lg:px-14">
+      <div className="relative z-10 mx-auto flex max-w-7xl flex-col gap-14 px-4 pb-16 pt-10 md:px-10 lg:px-14">
         <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
             className="flex flex-col text-left"
           >
             <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-primary">
@@ -35,14 +37,15 @@ export function HeroSection() {
               fields for maximum impact.
             </p>
             <div className="flex flex-wrap items-center gap-4 my-6">
-              <Button className="bg-[#EE4312] text-white hover:bg-[#cf3a10]">
-                Collaborate with Us
+              <Button asChild className="bg-[#EE4312] text-white hover:bg-[#cf3a10]">
+                <Link href="/contact">Collaborate with Us</Link>
               </Button>
               <Button
+                asChild
                 variant="outline"
                 className="border-[#EE4312] text-[#EE4312] hover:bg-[#EE4312]/10"
               >
-                Learn More
+                <Link href="/about">Learn More</Link>
               </Button>
             </div>
             <div className="mt-2 h-px w-24 bg-[#EE4312]" />
@@ -50,8 +53,9 @@ export function HeroSection() {
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
             className="relative"
           >
             <div className="relative overflow-hidden">

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
@@ -21,8 +22,9 @@ export function AboutHeroSection() {
       <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 md:px-10 lg:grid-cols-[1.05fr_0.95fr] lg:px-14">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, ease: "easeOut" }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="space-y-5"
         >
           <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.16em] text-primary">
@@ -36,15 +38,16 @@ export function AboutHeroSection() {
             strategies and expert guidance, ensuring business excellence through
             precise solutions and strategic expertise for sustainable growth.
           </p>
-          <Button className="bg-[#EE4312] text-white hover:bg-[#cf3a10] ">
-            Collaborate with Us
+          <Button asChild className="bg-[#EE4312] text-white hover:bg-[#cf3a10]">
+            <Link href="/contact">Collaborate with Us</Link>
           </Button>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, ease: "easeOut", delay: 0.1 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
           className="relative"
         >
           <div className="relative overflow-hidden">

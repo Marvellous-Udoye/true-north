@@ -6,8 +6,7 @@ import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import Link from "next/link";
 
 const primaryLinks = [
-  { href: "/#hero", label: "Home" },
-  { href: "/#our-work", label: "Our Work" },
+  { href: "/#services", label: "Services" },
   { href: "/#benefits", label: "Benefits" },
   { href: "/#testimonials", label: "Testimonials" },
   { href: "/contact", label: "Contact" },
@@ -26,7 +25,7 @@ export function Footer() {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.35, ease: "easeOut" }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
       className="bg-[#0f1f4a] py-12 text-white"
     >
       <div className="mx-auto flex max-w-7xl flex-col gap-10 px-4 md:px-10 lg:px-14">
@@ -42,9 +41,11 @@ export function Footer() {
               landscape.
             </p>
           </div>
-            <Button className="bg-[#EE4312] text-white hover:bg-[#cf3a10]">
-              Book an Appointment
+          <div className="flex flex-wrap items-center gap-4">
+            <Button asChild className="bg-[#EE4312] text-white hover:bg-[#cf3a10]">
+              <Link href="/contact">Book an Appointment</Link>
             </Button>
+          </div>
         </div>
 
         <div className="flex flex-col gap-6 pt-6">
@@ -54,7 +55,7 @@ export function Footer() {
                 <Link
                   key={link.label}
                   href={link.href}
-                  className="transition hover:text-white"
+                  className="transition hover:text-white lg:underline"
                 >
                   {link.label}
                 </Link>

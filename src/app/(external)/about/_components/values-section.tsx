@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
@@ -64,8 +65,8 @@ export function ValuesSection() {
               works highlighting professionalism among members and clients.
             </p>
           </div>
-          <Button className="w-fit bg-[#EE4312] text-white hover:bg-[#cf3a10]">
-            Collaborate with Us
+          <Button asChild className="w-fit bg-[#EE4312] text-white hover:bg-[#cf3a10]">
+            <Link href="/contact">Collaborate with Us</Link>
           </Button>
         </div>
 
@@ -76,7 +77,7 @@ export function ValuesSection() {
               initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.35, delay: index * 0.04 }}
+              transition={{ duration: 0.6, delay: index * 0.04 }}
               className="flex flex-col items-center rounded-2xl bg-white px-6 py-8 text-center shadow-sm"
             >
               <div className="mb-4 flex items-center justify-center">

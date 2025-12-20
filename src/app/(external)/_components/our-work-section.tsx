@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
@@ -51,8 +52,8 @@ export function OurWorkSection() {
               comprehensive support and effective paths to success.
             </p>
           </div>
-          <Button className="w-fit bg-[#EE4312] text-white hover:bg-[#cf3a10]">
-            Book an Appointment
+          <Button asChild className="w-fit bg-[#EE4312] text-white hover:bg-[#cf3a10]">
+            <Link href="/contact">Book an Appointment</Link>
           </Button>
         </div>
 
@@ -63,7 +64,7 @@ export function OurWorkSection() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.35, delay: index * 0.05 }}
+              transition={{ duration: 0.6, delay: index * 0.05 }}
               className="flex flex-col gap-4 rounded-2xl bg-white px-6 py-8 text-center shadow-sm"
             >
               <div className="flex items-center justify-center">

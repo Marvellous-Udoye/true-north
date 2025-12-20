@@ -6,7 +6,7 @@ export default function AboutPage() {
   return (
     <main>
       <AboutHeroSection />
-      <VisionSection />
+    <VisionSection />
       <ValuesSection />
     </main>
   );

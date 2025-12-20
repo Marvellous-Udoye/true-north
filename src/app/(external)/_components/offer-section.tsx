@@ -71,7 +71,7 @@ export function OfferSection() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.35, delay: index * 0.05 }}
+              transition={{ duration: 0.6, delay: index * 0.05 }}
               className="flex flex-col items-center gap-4 rounded-2xl bg-white px-6 py-8 text-center shadow-sm"
             >
               <div className="flex items-center justify-center">

@@ -9,9 +9,9 @@ import { Button } from "@/components/ui/button";
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/#services", label: "Service" },
-  { href: "/#contact", label: "Contact" },
+  { href: "/about", label: "About Us" },
+  { href: "/#services", label: "Services" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export function Navbar() {
@@ -23,7 +23,7 @@ export function Navbar() {
       animate: {
         y: 0,
         opacity: 1,
-        transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] },
+        transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
       },
     }),
     []
@@ -62,8 +62,8 @@ export function Navbar() {
             ))}
           </nav>
           <div className="flex items-center gap-3">
-            <Button className="hidden md:inline-flex">
-              Book an Appointment
+            <Button asChild className="hidden md:inline-flex">
+              <Link href="/contact">Book an Appointment</Link>
             </Button>
             <button
               type="button"
@@ -129,8 +129,8 @@ export function Navbar() {
                   </Link>
                 ))}
               </div>
-              <Button className="w-full" size="lg">
-                Book an Appointment
+              <Button asChild className="w-full" size="lg">
+                <Link href="/contact">Book an Appointment</Link>
               </Button>
             </motion.div>
           </motion.div>

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -22,8 +23,8 @@ export function CtaSection() {
             Your success story begins with a click. Explore our consulting
             solutions for transformative results.
           </p>
-          <Button className="bg-[#EE4312] text-white hover:bg-[#cf3a10]">
-            Collaborate with Us
+          <Button asChild className="bg-[#EE4312] text-white hover:bg-[#cf3a10]">
+            <Link href="/contact">Collaborate with Us</Link>
           </Button>
         </div>
         <motion.div

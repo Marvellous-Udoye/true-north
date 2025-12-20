@@ -114,7 +114,7 @@ export function TestimonialsSection() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.35 }}
+              transition={{ duration: 0.6 }}
               className={cardIndex === 0 ? "" : "hidden md:block"}
             >
               <div className="flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-sm">

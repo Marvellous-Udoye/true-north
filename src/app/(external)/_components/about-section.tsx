@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
@@ -12,7 +13,7 @@ export function AboutSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="space-y-5"
         >
           <p className="text-sm font-semibold uppercase tracking-[0.16em] text-white/80">
@@ -27,8 +28,8 @@ export function AboutSection() {
             global reach with tailored playbooks to connect exceptional talent
             to the right opportunities and keep teams aligned.
           </p>
-          <Button className="bg-[#EE4312] text-white hover:bg-[#cf3a10]">
-            Learn More
+          <Button asChild className="bg-[#EE4312] text-white hover:bg-[#cf3a10]">
+            <Link href="/about">Learn More</Link>
           </Button>
         </motion.div>
 
@@ -36,7 +37,7 @@ export function AboutSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.4, ease: "easeOut", delay: 0.1 }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
           className="relative"
         >
           <div className="absolute -right-4 -top-4 hidden h-24 w-24 rounded-2xl border border-[#EE4312] md:block" />
