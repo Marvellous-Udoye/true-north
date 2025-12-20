@@ -10,7 +10,7 @@ const primaryLinks = [
   { href: "/#our-work", label: "Our Work" },
   { href: "/#benefits", label: "Benefits" },
   { href: "/#testimonials", label: "Testimonials" },
-  { href: "/#cta", label: "Contact" },
+  { href: "/contact", label: "Contact" },
 ];
 
 const socialLinks = [

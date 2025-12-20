@@ -70,7 +70,7 @@ export function HeroSection() {
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-t border-primary/10 pt-8">
           <div className="space-y-2 ">
             <p className="text-2xl font-semibold text-primary">
-              This is Our result
+              This is our result
             </p>
             <p className="max-w-xl text-base text-muted-foreground">
               How capable we are at work shines through in every endeavor.
