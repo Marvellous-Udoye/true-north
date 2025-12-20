@@ -20,14 +20,14 @@ export function Footer() {
       transition={{ duration: 0.35, ease: "easeOut" }}
       className="border-t border-primary/10 bg-white py-10"
     >
-      <div className="mx-auto flex flex-col gap-6 max-w-7xl px-4 md:flex-row md:items-center md:justify-between md:px-10 lg:px-14">
+      <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 md:flex-row md:items-center md:justify-between md:px-10 lg:px-14">
         <div className="flex items-center gap-3">
           <Image
-            src="/assets/logo.png"
+            src="/logo.jpeg"
             alt="TrueNorth logo"
-            width={40}
-            height={40}
-            className="h-10 w-10 rounded-lg object-contain"
+            width={120}
+            height={36}
+            className="h-9 w-auto object-contain"
           />
           <div className="space-y-1">
             <p className="text-base font-semibold text-primary">TrueNorth Talent Advisory</p>

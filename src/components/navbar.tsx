@@ -8,10 +8,11 @@ import { AnimatePresence, type Variants, motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
 const navLinks = [
-  { href: "/#services", label: "Services" },
-  { href: "/#audiences", label: "Who we serve" },
-  { href: "/#how-it-works", label: "How it works" },
-  { href: "/faq", label: "FAQ" },
+  { href: "/", label: "Home" },
+  { href: "/#about", label: "About" },
+  { href: "/#services", label: "Service" },
+  { href: "/#blog", label: "Blog" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 export function Navbar() {
@@ -35,33 +36,39 @@ export function Navbar() {
         variants={navVariants}
         initial="initial"
         animate="animate"
-        className="fixed left-1/2 top-4 z-40 w-[calc(100%-1.5rem)] max-w-6xl -translate-x-1/2 rounded-full border border-primary/15 bg-white shadow-md backdrop-blur"
+        className="sticky top-0 z-40 w-full border-b border-primary/10 bg-white"
       >
-        <div className="flex items-center justify-between px-4 py-3 md:px-6">
-          <Link href="/" className="flex items-center gap-2 text-base font-semibold text-primary">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-10 lg:px-14">
+          <Link
+            href="/"
+            className="flex items-center gap-2 text-base font-semibold text-primary"
+          >
             <Image
-              src="/assets/logo.png"
+              src="/logo.jpeg"
               alt="TrueNorth logo"
-              width={34}
-              height={34}
-              className="h-9 w-9 rounded-lg object-contain"
+              width={120}
+              height={64}
+              className="h-12 sm:h-16 object-cover"
             />
-            <span className="hidden sm:inline">TrueNorth</span>
           </Link>
-          <nav className="hidden items-center gap-6 text-sm font-medium text-muted-foreground md:flex">
+          <nav className="hidden items-center gap-8 text-base font-medium text-muted-foreground lg:flex">
             {navLinks.map((link) => (
-              <Link key={link.href} href={link.href} className="transition hover:text-primary">
+              <Link
+                key={link.href}
+                href={link.href}
+                className="transition hover:text-primary"
+              >
                 {link.label}
               </Link>
             ))}
           </nav>
           <div className="flex items-center gap-3">
-            <Button size="sm" className="hidden px-4 md:inline-flex">
-              Book a call
+            <Button className="hidden md:inline-flex">
+              Book an Appointment
             </Button>
             <button
               type="button"
-              className="inline-flex items-center justify-center text-primary transition hover:bg-primary/5 md:hidden"
+              className="inline-flex items-center justify-center rounded-full border border-primary/15 p-2 text-primary transition hover:bg-primary/5 md:hidden"
               aria-label="Toggle menu"
               onClick={() => setOpen((prev) => !prev)}
             >
@@ -91,7 +98,13 @@ export function Navbar() {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between">
-                <span className="text-lg font-semibold text-primary">TrueNorth</span>
+                <Image
+                  src="/logo.jpeg"
+                  alt="TrueNorth logo"
+                  width={120}
+                  height={36}
+                  className="h-9 w-auto object-contain"
+                />
                 <button
                   type="button"
                   className="rounded-full border border-primary/15 p-2 text-primary hover:bg-primary/5"
@@ -114,7 +127,7 @@ export function Navbar() {
                 ))}
               </div>
               <Button className="w-full" size="lg">
-                Book a call
+                Book an Appointment
               </Button>
             </motion.div>
           </motion.div>

@@ -6,7 +6,7 @@ export default function ExternalLayout({ children }: { children: ReactNode }) {
   return (
     <div className="bg-background text-foreground">
       <Navbar />
-        <>{children}</>
+      {children}
       <Footer />
     </div>
   );

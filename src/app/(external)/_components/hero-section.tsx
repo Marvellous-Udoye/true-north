@@ -1,49 +1,91 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
-// import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
+
+const stats = [
+  { value: "160", label: "Client Project" },
+  { value: "340", label: "Successful Project" },
+  { value: "300+", label: "Team Members" },
+  { value: "82M", label: "Total Revenue" },
+];
 
 export function HeroSection() {
   return (
-    <section
-      id="hero"
-      className="relative overflow-hidden bg-linear-to-b from-primary/5 via-primary/3 to-background min-h-[115vh] pt-24"
-    >
-      <div
-        className="absolute inset-0 opacity-90"
-        style={{
-          backgroundImage: "url('/assets/hero-bg.svg')",
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-        }}
-        aria-hidden="true"
-      />
-      <div className="relative mx-auto flex max-w-6xl flex-col gap-10 px-6 pb-20 pt-16 md:px-10 lg:px-14 lg:pb-24 lg:pt-20">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className="flex flex-col gap-4 text-center md:gap-6 lg:gap-7"
-        >
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
-            TrueNorth Talent Advisory
-          </p>
-          <h1 className="text-balance text-3xl font-bold leading-tight text-primary md:text-4xl lg:text-5xl">
-            Fill critical roles faster with tailored talent advisory built for
-            growth teams.
-          </h1>
-          {/* <div className="mx-auto flex w-full flex-col gap-3 rounded-2xl border border-primary/15 bg-white/70 p-3 backdrop-blur md:w-fit md:flex-row md:items-center md:gap-4 md:p-4">
-            <input
-              type="email"
-              placeholder="Your work email"
-              className="h-11 w-full rounded-xl border border-input bg-white px-4 text-sm shadow-xs outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20 md:w-72"
-            />
-            <Button className="h-11 w-full md:w-auto" size="lg">
-              Book a consultation
-            </Button>
-          </div> */}
-        </motion.div>
+    <section id="hero" className="relative overflow-hidden bg-white">
+      <div className="relative mx-auto flex max-w-7xl flex-col gap-14 px-4 pb-16 pt-10 md:px-10 lg:px-14">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="flex flex-col gap-6 text-left"
+          >
+            <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+              TrueNorth Talent Advisory
+            </p>
+            <h1 className="text-balance text-2xl sm:text-3xl font-bold leading-tight text-primary md:text-4xl lg:text-5xl">
+              Strategic Talent Advisory Connecting Exceptional Candidates with
+              Leading Organizations.
+            </h1>
+            <p className="max-w-xl text-base text-muted-foreground md:text-lg">
+              Experience a rise in your pursuits with our expert consulting. We
+              tailor success strategies to your unique goals, covering diverse
+              fields for maximum impact.
+            </p>
+            <div className="flex flex-wrap items-center gap-4">
+              <Button className="bg-[#EE4312] text-white hover:bg-[#cf3a10]">
+                Collaborate with Us
+              </Button>
+              <Button
+                variant="outline"
+                className="border-[#EE4312] text-[#EE4312] hover:bg-[#EE4312]/10"
+              >
+                Learn More
+              </Button>
+            </div>
+            <div className="mt-2 h-px w-24 bg-[#EE4312]" />
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
+            className="relative"
+          >
+            <div className="relative overflow-hidden">
+              <Image
+                src="/assets/hero-img.svg"
+                alt="Consultants collaborating on a strategy session"
+                width={520}
+                height={420}
+                className="h-auto w-full rounded-2xl object-cover"
+                priority
+              />
+            </div>
+          </motion.div>
+        </div>
+
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-t border-primary/10 pt-8">
+          <div className="space-y-2 ">
+            <p className="text-2xl font-semibold text-primary">
+              This is Our result
+            </p>
+            <p className="max-w-xl text-base text-muted-foreground">
+              How capable we are at work shines through in every endeavor.
+            </p>
+          </div>
+
+          <div className="grid gap-6 text-primary grid-cols-2 sm:grid-cols-4">
+            {stats.map((stat) => (
+              <div key={stat.label} className="space-y-1">
+                <p className="text-3xl lg:text-4xl font-bold">{stat.value}</p>
+                <p className="text-sm text-muted-foreground">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
