@@ -46,7 +46,7 @@ export function AboutSection() {
               alt="TrueNorth team"
               width={520}
               height={420}
-              className="h-auto w-full rounded-2xl object-cover"
+              className="h-auto w-full object-cover"
             />
           </div>
         </motion.div>

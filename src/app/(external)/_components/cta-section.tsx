@@ -11,14 +11,14 @@ export function CtaSection() {
       className="relative overflow-hidden bg-[#0f1f4a] text-white"
     >
       <div className="relative mx-auto grid lg:grid-cols-2 items-center gap-6 lg:pl-14">
-        <div className="max-w-xl space-y-4">
+        <div className="max-w-xl space-y-4 max-sm:px-6 max-md:px-12 max-lg:px-16 max-lg:pt-16">
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/70">
             Let&apos;s Collaborate
           </p>
           <h2 className="text-2xl font-bold md:text-3xl">
             Let&apos;s Collaborate for Mutual Success
           </h2>
-          <p className="text-sm text-white/70">
+          <p className="text-base text-white/70">
             Your success story begins with a click. Explore our consulting
             solutions for transformative results.
           </p>

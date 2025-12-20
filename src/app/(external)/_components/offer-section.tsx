@@ -43,12 +43,9 @@ const offers = [
 
 export function OfferSection() {
   return (
-    <section
-      id="services"
-      className="relative overflow-hidden bg-[#f7f9fc] py-16 md:py-20"
-    >
+    <section id="services" className="relative overflow-hidden bg-[#f7f9fc] py-16 md:py-20">
       <div
-        className="pointer-events-none absolute inset-0 opacity-60 top-0 right-0 h-12 max-sm:max-w-40"
+        className="pointer-events-none absolute inset-0 max-sm:h-12 max-sm:w-40 opacity-60"
         style={{
           backgroundImage: "url('/assets/offer-bg.svg')",
           backgroundRepeat: "no-repeat",
@@ -58,12 +55,12 @@ export function OfferSection() {
       />
       <div className="relative mx-auto flex max-w-7xl flex-col gap-10 px-4 md:px-10 lg:px-14">
         <div className="space-y-3">
-          <p className="text-xl sm:text-3xl font-semibold uppercase tracking-[0.16em] text-primary">
+          <p className="text-2xl sm:text-3xl font-bold text-primary">
             What We Can Offer You
           </p>
           <p className="max-w-2xl text-base text-muted-foreground">
-            Optimize your journey with our consulting services, delivering
-            personalized solutions for success.
+            Optimize your journey with our consulting services, delivering personalized solutions
+            for success.
           </p>
         </div>
 
@@ -77,15 +74,11 @@ export function OfferSection() {
               transition={{ duration: 0.35, delay: index * 0.05 }}
               className="flex flex-col items-center gap-4 rounded-2xl bg-white px-6 py-8 text-center shadow-sm"
             >
-              <div className="flex h-16 w-16 items-center justify-center">
+              <div className="flex items-center justify-center">
                 <Image src={offer.icon} alt="" width={64} height={64} />
               </div>
-              <h3 className="text-xl font-semibold text-primary">
-                {offer.title}
-              </h3>
-              <p className="text-base text-muted-foreground">
-                {offer.description}
-              </p>
+              <h3 className="text-xl font-semibold text-primary">{offer.title}</h3>
+              <p className="text-base text-muted-foreground">{offer.description}</p>
             </motion.div>
           ))}
         </div>

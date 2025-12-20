@@ -68,11 +68,15 @@ export function Navbar() {
             </Button>
             <button
               type="button"
-              className="inline-flex items-center justify-center rounded-full border border-primary/15 p-2 text-primary transition hover:bg-primary/5 md:hidden"
+              className="inline-flex items-center justify-center text-primary transition hover:bg-primary/5 md:hidden"
               aria-label="Toggle menu"
               onClick={() => setOpen((prev) => !prev)}
             >
-              {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {open ? (
+                <X className="size-6" />
+              ) : (
+                <Menu className="size-6 mr-2" />
+              )}
             </button>
           </div>
         </div>
@@ -101,17 +105,17 @@ export function Navbar() {
                 <Image
                   src="/logo.jpeg"
                   alt="TrueNorth logo"
-                  width={120}
-                  height={36}
-                  className="h-9 w-auto object-contain"
+                  width={100}
+                  height={80}
+                  className="h-8 sm:h-10 object-cover"
                 />
                 <button
                   type="button"
-                  className="rounded-full border border-primary/15 p-2 text-primary hover:bg-primary/5"
+                  className="text-primary hover:bg-primary/5"
                   aria-label="Close menu"
                   onClick={() => setOpen(false)}
                 >
-                  <X className="h-5 w-5" />
+                  <X className="size-6" />
                 </button>
               </div>
               <div className="flex flex-col gap-4 text-base font-medium text-muted-foreground">

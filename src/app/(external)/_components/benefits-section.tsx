@@ -49,7 +49,7 @@ export function BenefitsSection() {
               >
                 <div className="flex items-center gap-4">
                   <div className="flex items-center justify-center">
-                    <Image src={benefit.icon} alt="" width={72} height={104} />
+                    <Image src={benefit.icon} alt="" width={62} height={94} />
                   </div>
                   <div className="space-y-1">
                     <h3 className="text-base font-semibold">{benefit.title}</h3>

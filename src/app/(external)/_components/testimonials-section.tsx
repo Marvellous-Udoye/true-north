@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
-import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Star } from "lucide-react";
+import { motion } from "framer-motion";
+import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
+import Image from "next/image";
+import { useState } from "react";
 
 const testimonials = [
   {
@@ -52,7 +52,10 @@ export function TestimonialsSection() {
   };
 
   return (
-    <section id="testimonials" className="relative overflow-hidden bg-[#f7f9fc] py-16 md:py-20">
+    <section
+      id="testimonials"
+      className="relative overflow-hidden bg-[#f7f9fc] py-16 md:py-20"
+    >
       <div
         className="pointer-events-none absolute right-0 top-0 h-40 w-64 opacity-70"
         style={{
@@ -63,7 +66,7 @@ export function TestimonialsSection() {
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute bottom-0 left-0 h-40 w-64 opacity-70"
+        className="pointer-events-none absolute bottom-0 left-0 h-12 sm:h-40 w-64 opacity-70"
         style={{
           backgroundImage: "url('/assets/offer-bg.svg')",
           backgroundRepeat: "no-repeat",
@@ -77,9 +80,9 @@ export function TestimonialsSection() {
             <h2 className="text-2xl font-bold text-primary md:text-3xl">
               See What Clients Are Saying
             </h2>
-            <p className="max-w-2xl text-sm text-muted-foreground">
-              Explore the authentic sentiments and experiences of our clients as they share their
-              thoughts and satisfaction.
+            <p className="max-w-2xl text-base text-muted-foreground">
+              Explore the authentic sentiments and experiences of our clients as
+              they share their thoughts and satisfaction.
             </p>
           </div>
           <div className="flex items-center gap-3">
@@ -115,10 +118,11 @@ export function TestimonialsSection() {
               className={cardIndex === 0 ? "" : "hidden md:block"}
             >
               <div className="flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-sm">
-                <div className="flex-1 px-6 py-6 text-sm text-muted-foreground">
+                <div className="flex-1 px-6 py-6 text-base text-muted-foreground">
+                  <Quote className="size-6 mb-4 text-[#EE4312]" />
                   {testimonial.quote}
                 </div>
-                <div className="flex items-center justify-between bg-[#EE4312] px-6 py-4 text-white">
+                <div className="flex items-center justify-between bg-[#EE4312] p-6 text-white">
                   <div className="flex items-center gap-3">
                     <div className="h-12 w-12 overflow-hidden rounded-full border-2 border-white/70">
                       <Image
@@ -130,14 +134,13 @@ export function TestimonialsSection() {
                       />
                     </div>
                     <div>
-                      <p className="text-sm font-semibold">{testimonial.name}</p>
-                      <p className="text-xs text-white/80">{testimonial.title}</p>
+                      <p className="text-sm font-semibold mb-1">
+                        {testimonial.name}
+                      </p>
+                      <p className="text-xs text-white/80">
+                        {testimonial.title}
+                      </p>
                     </div>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    {Array.from({ length: testimonial.rating }).map((_, starIndex) => (
-                      <Star key={starIndex} className="h-4 w-4 fill-white text-white" />
-                    ))}
                   </div>
                 </div>
               </div>

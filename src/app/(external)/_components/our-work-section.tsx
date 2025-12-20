@@ -8,28 +8,31 @@ const workItems = [
   {
     title: "Analysis & Research",
     description:
-      "Detailed discovery and market insight to shape practical, high-impact solutions.",
+      "The consulting firm conducts detailed analysis and research, employing strategic methodologies to deliver client-focused insights and effective solutions.",
     icon: "/assets/our-work-1.svg",
   },
   {
     title: "Actualization",
     description:
-      "Structured execution that aligns stakeholders and keeps delivery on track.",
+      "In the execution phase, the consulting firm adeptly translates strategies into action, ensuring seamless actualization of client objectives and aspirations.",
     icon: "/assets/our-work-2.svg",
   },
   {
     title: "Initiate",
     description:
-      "Launch support, playbooks, and checkpoints to keep momentum steady.",
+      "The consulting firm kickstarts client initiatives with strategic expertise, ensuring a smooth launch and effective implementation of customized solutions.",
     icon: "/assets/our-work-3.svg",
   },
 ];
 
 export function OurWorkSection() {
   return (
-    <section id="our-work" className="relative overflow-hidden bg-[#f7f9fc] py-16 md:py-20">
+    <section
+      id="our-work"
+      className="relative overflow-hidden bg-[#f7f9fc] py-16 md:py-20"
+    >
       <div
-        className="pointer-events-none absolute right-0 top-6 h-40 w-56 opacity-70"
+        className="pointer-events-none absolute right-0 top-0 lg:top-6 h-12 sm:h-24 lg:h-40 w-56 opacity-70"
         style={{
           backgroundImage: "url('/assets/hero-dots.svg')",
           backgroundRepeat: "no-repeat",
@@ -43,9 +46,9 @@ export function OurWorkSection() {
             <h2 className="text-2xl font-bold text-primary md:text-3xl">
               Our Work is For Your Success
             </h2>
-            <p className="max-w-2xl text-sm text-muted-foreground">
-              Tailored systematic solutions for your goals, ensuring comprehensive support and
-              effective paths to success.
+            <p className="max-w-2xl text-base text-muted-foreground">
+              Tailored systematic solutions for your goals, ensuring
+              comprehensive support and effective paths to success.
             </p>
           </div>
           <Button className="w-fit bg-[#EE4312] text-white hover:bg-[#cf3a10]">
@@ -61,13 +64,17 @@ export function OurWorkSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.35, delay: index * 0.05 }}
-              className="flex flex-col gap-4 rounded-2xl bg-white px-6 py-8 text-left shadow-sm"
+              className="flex flex-col gap-4 rounded-2xl bg-white px-6 py-8 text-center shadow-sm"
             >
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-primary/10 bg-[#f7f9fc]">
-                <Image src={item.icon} alt="" width={36} height={36} />
+              <div className="flex items-center justify-center">
+                <Image src={item.icon} alt="" width={64} height={64} />
               </div>
-              <h3 className="text-lg font-semibold text-primary">{item.title}</h3>
-              <p className="text-sm text-muted-foreground">{item.description}</p>
+              <h3 className="text-lg font-semibold text-primary">
+                {item.title}
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                {item.description}
+              </p>
             </motion.div>
           ))}
         </div>

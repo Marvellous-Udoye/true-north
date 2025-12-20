@@ -42,16 +42,14 @@ export function Footer() {
               landscape.
             </p>
           </div>
-          <div className="flex flex-col items-center gap-4">
             <Button className="bg-[#EE4312] text-white hover:bg-[#cf3a10]">
               Book an Appointment
             </Button>
-          </div>
         </div>
 
         <div className="flex flex-col gap-6 pt-6">
           <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-            <nav className="flex flex-wrap gap-4 text-base text-white/70">
+            <nav className="flex flex-col lg:flex-row gap-4 text-base text-white/70">
               {primaryLinks.map((link) => (
                 <Link
                   key={link.label}

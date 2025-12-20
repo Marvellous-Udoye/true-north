@@ -20,12 +20,12 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="flex flex-col gap-6 text-left"
+            className="flex flex-col text-left"
           >
             <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-primary">
               TrueNorth Talent Advisory
             </p>
-            <h1 className="text-balance text-2xl sm:text-3xl font-bold leading-tight text-primary md:text-4xl lg:text-5xl">
+            <h1 className="mt-4 mb-6 text-balance text-2xl sm:text-3xl font-bold leading-tight text-primary md:text-4xl lg:text-5xl">
               Strategic Talent Advisory Connecting Exceptional Candidates with
               Leading Organizations.
             </h1>
@@ -34,7 +34,7 @@ export function HeroSection() {
               tailor success strategies to your unique goals, covering diverse
               fields for maximum impact.
             </p>
-            <div className="flex flex-wrap items-center gap-4">
+            <div className="flex flex-wrap items-center gap-4 my-6">
               <Button className="bg-[#EE4312] text-white hover:bg-[#cf3a10]">
                 Collaborate with Us
               </Button>
@@ -60,7 +60,7 @@ export function HeroSection() {
                 alt="Consultants collaborating on a strategy session"
                 width={520}
                 height={420}
-                className="h-auto w-full rounded-2xl object-cover"
+                className="h-auto w-full object-cover"
                 priority
               />
             </div>
