@@ -14,12 +14,15 @@ TrueNorth Talent Advisory helps organizations and professionals navigate the tal
 - TypeScript
 - Tailwind CSS
 - `next/font` with Plus Jakarta Sans
+- Supabase (Auth + database)
+- Nodemailer (contact form email delivery)
+- Cloudinary (blog image uploads)
 
 ## Getting Started
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm run dev
 # app runs on http://localhost:3000
 ```
 
@@ -31,7 +34,7 @@ npm run dev
 
 ## Company Snapshot
 
-- **Industry:** Human Resources Services  
-- **Company Size:** 2–10 employees  
-- **Category:** Talent Recruitment Agency  
+- **Industry:** Human Resources Services
+- **Company Size:** 2-10 employees
+- **Category:** Talent Recruitment Agency
 - **Mission:** Connect exceptional talent with the right opportunities so businesses grow and professionals reach their full potential.
