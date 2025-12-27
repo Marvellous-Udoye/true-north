@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 
 export function ContactHeroSection() {
   return (
-    <section id="contact-hero" className="relative overflow-hidden bg-white py-16 md:py-20">
+    <section id="contact-hero" className="relative overflow-hidden bg-white py-16 md:py-20 scroll-mt-20">
       <div
         className="pointer-events-none absolute right-0 sm:right-6 top-0 h-20 w-32 opacity-70"
         style={{

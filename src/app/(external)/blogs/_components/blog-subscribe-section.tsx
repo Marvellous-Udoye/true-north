@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
+import { SubscribeForm } from "@/components/subscribe-form";
 import { motion } from "framer-motion";
 
 export function BlogSubscribeSection() {
@@ -43,9 +43,11 @@ export function BlogSubscribeSection() {
             Subscribe to our newsletter, so you can get every latest article and
             information about us every week.
           </p>
-          <Button className="bg-[#EE4312] text-white hover:bg-[#cf3a10]">
-            Subscribe
-          </Button>
+          <SubscribeForm
+            className="mt-6 max-w-md"
+            inputClassName="bg-white"
+            buttonClassName="bg-[#EE4312] text-white hover:bg-[#cf3a10]"
+          />
         </motion.div>
 
         <motion.div

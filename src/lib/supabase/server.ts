@@ -33,3 +33,16 @@ export const supabaseServerClient = () =>
       },
     },
   });
+
+export const supabaseServerClientReadonly = () =>
+  createServerClient(supabaseUrl, supabaseAnonKey, {
+    cookies: {
+      async getAll() {
+        const cookieStore = await cookies();
+        return cookieStore.getAll();
+      },
+      async setAll() {
+        // No-op for server components where cookies cannot be mutated.
+      },
+    },
+  });

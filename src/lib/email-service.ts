@@ -31,7 +31,7 @@ export const sendContactEmail = async (
     const mailOptions = {
       from: `"TrueNorth Talent Advisory" <${EMAIL_CONFIG.auth.user}>`,
       to: RECIPIENT_EMAIL,
-      subject: `New Contact Form Submission from ${formData.fullName}`,
+      subject: `New Contact from ${formData.company}`,
       html: generateContactEmailTemplate(formData),
       replyTo: formData.email,
     };

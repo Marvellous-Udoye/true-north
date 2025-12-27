@@ -9,7 +9,7 @@ export function BlogHeroSection() {
   return (
     <section
       id="blog-hero"
-      className="relative overflow-hidden bg-white py-16 md:py-20"
+      className="relative overflow-hidden bg-white py-16 md:py-20 scroll-mt-20"
     >
       <div
         className="pointer-events-none absolute bottom-0 left-0 h-12 sm:h-24 w-48 opacity-60"

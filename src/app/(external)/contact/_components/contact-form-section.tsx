@@ -185,8 +185,8 @@ export function ContactFormSection() {
                 {isSubmitting ? "Sending..." : "Submit Form"}
               </Button>
               {submitted ? (
-                <span className="text-sm text-muted-foreground">
-                  Thanks! We&apos;ll get back to you shortly.
+                <span className="text-sm text-primary">
+                  Thanks for reaching out! We&apos;ll get back to you shortly.
                 </span>
               ) : null}
               {errorMessage ? (

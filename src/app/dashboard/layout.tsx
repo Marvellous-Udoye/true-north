@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { DashboardSidebar } from "@/components/dashboard/dashboard-sidebar";
 import { DashboardTopbar } from "@/components/dashboard/dashboard-topbar";
-import { Toaster } from "@/components/ui/sonner";
 import { supabaseBrowserClient } from "@/lib/supabase/client";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
@@ -42,15 +41,14 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="flex min-h-screen bg-[#f7f9fc] text-primary">
-      <div className="hidden lg:block">
+    <div className="min-h-screen bg-[#f7f9fc] text-primary">
+      <div className="fixed left-0 top-0 hidden h-screen w-64 lg:block">
         <DashboardSidebar />
       </div>
-      <div className="flex min-h-screen flex-1 flex-col">
+      <div className="flex min-h-screen flex-col lg:pl-64">
         <DashboardTopbar />
-        <main className="flex-1 px-6 py-6">{children}</main>
+        <main className="flex-1 px-4 py-6">{children}</main>
       </div>
-      <Toaster richColors position="top-right" />
     </div>
   );
 }

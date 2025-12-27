@@ -11,29 +11,41 @@ import {
   PaginationItem,
 } from "@/components/ui/pagination";
 import { Skeleton } from "@/components/ui/skeleton";
-import { blogPosts } from "@/lib/blog-data";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { BLOG_FILTERS } from "@/lib/blog-categories";
 
-const filters = [
-  "All Articles",
-  "Business",
-  "Marketing",
-  "Financial",
-  "Information Technology",
-  "Human Resource",
-  "Design",
-];
+type BlogPost = {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string | null;
+  category: string | null;
+  author: string | null;
+  cover_image_url: string | null;
+  content: string | null;
+  published_at: string | null;
+  created_at: string | null;
+};
+
+type BlogsMainSectionProps = {
+  posts: BlogPost[];
+};
 
 const pageSize = 6;
 
-export function BlogsMainSection() {
+const fallbackImage = "/assets/hero-img.svg";
+
+const getPostDate = (post: BlogPost) =>
+  post.published_at || post.created_at || "";
+
+export function BlogsMainSection({ posts }: BlogsMainSectionProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [activeFilter, setActiveFilter] = useState(filters[0]);
+  const [activeFilter, setActiveFilter] = useState(BLOG_FILTERS[0]);
   const [dateAfter, setDateAfter] = useState<Date | undefined>();
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -48,28 +60,30 @@ export function BlogsMainSection() {
     const normalizedFilter = activeFilter.toLowerCase();
     const dateFilter = dateAfter ?? null;
 
-    const filtered = blogPosts.filter((post) => {
+    const filtered = posts.filter((post) => {
       const matchesFilter =
         normalizedFilter === "all articles" ||
-        post.category.toLowerCase() === normalizedFilter;
+        (post.category ?? "").toLowerCase() === normalizedFilter;
       const matchesSearch =
         !term ||
         post.title.toLowerCase().includes(term) ||
-        post.excerpt.toLowerCase().includes(term) ||
-        post.author.toLowerCase().includes(term);
-      const matchesDate = !dateFilter || new Date(post.date) >= dateFilter;
+        (post.excerpt ?? "").toLowerCase().includes(term) ||
+        (post.author ?? "").toLowerCase().includes(term);
+      const postDate = getPostDate(post);
+      const matchesDate =
+        !dateFilter || (postDate && new Date(postDate) >= dateFilter);
 
       return matchesFilter && matchesSearch && matchesDate;
     });
 
     const sorted = [...filtered].sort((a, b) => {
-      const left = new Date(a.date).getTime();
-      const right = new Date(b.date).getTime();
+      const left = new Date(getPostDate(a)).getTime();
+      const right = new Date(getPostDate(b)).getTime();
       return right - left;
     });
 
     return sorted;
-  }, [searchTerm, activeFilter, dateAfter]);
+  }, [searchTerm, activeFilter, dateAfter, posts]);
 
   const totalPages = Math.max(1, Math.ceil(filteredPosts.length / pageSize));
   const currentPage = Math.min(page, totalPages);
@@ -85,7 +99,7 @@ export function BlogsMainSection() {
 
   const handleClearFilters = () => {
     setSearchTerm("");
-    setActiveFilter(filters[0]);
+    setActiveFilter(BLOG_FILTERS[0]);
     setDateAfter(undefined);
     setPage(1);
   };
@@ -132,17 +146,17 @@ export function BlogsMainSection() {
         aria-hidden="true"
       />
       <div className="mx-auto flex max-w-7xl flex-col gap-8 px-4 md:px-10 lg:px-14">
-        <div className="flex flex-col gap-4">
-          <div className="space-y-2">
-            <h2 className="text-2xl font-bold text-primary md:text-3xl max-w-md">
-              All True North Talent Advisory Blogs Collection
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+          <div className="space-y-2 lg:max-w-xl">
+            <h2 className="text-2xl font-bold text-primary md:text-3xl">
+              All Blogs Collection
             </h2>
             <p className="text-base text-muted-foreground">
               Discover fresh insights curated for leaders, operators, and career
               builders.
             </p>
           </div>
-          <div className="flex gap-3">
+          <div className="flex w-full gap-3 lg:max-w-md">
             <div className="relative w-full">
               <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
@@ -153,14 +167,14 @@ export function BlogsMainSection() {
                   setSearchTerm(event.target.value);
                   setPage(1);
                 }}
-                className="w-full pl-11 "
+                className="w-full pl-11"
               />
             </div>
           </div>
         </div>
 
         <div className="flex flex-nowrap overflow-y-auto gap-2">
-          {filters.map((filter) => {
+          {BLOG_FILTERS.map((filter) => {
             const isActive = filter === activeFilter;
             return (
               <button
@@ -182,13 +196,16 @@ export function BlogsMainSection() {
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {loading
             ? Array.from({ length: 6 }).map((_, index) => (
-                <Card key={index} className="overflow-hidden">
-                  <Skeleton className="h-48 w-full" />
-                  <CardContent className="space-y-3 p-5">
+                <Card key={index} className="overflow-hidden bg-white py-0">
+                  <div className="relative h-48 overflow-hidden">
+                    <Skeleton className="h-full w-full" />
+                    <div className="absolute inset-0 bg-white/20" />
+                  </div>
+                  <CardContent className="space-y-3 px-5 pb-5">
                     <Skeleton className="h-4 w-24" />
                     <Skeleton className="h-5 w-3/4" />
                     <Skeleton className="h-3 w-full" />
-                    <Skeleton className="h-3 w-2/3" />
+                    <Skeleton className="h-3 w-1/2" />
                   </CardContent>
                 </Card>
               ))
@@ -200,38 +217,45 @@ export function BlogsMainSection() {
                   viewport={{ once: true, amount: 0.3 }}
                   transition={{ duration: 0.6, delay: index * 0.03 }}
                 >
-                  <Card className="overflow-hidden py-0 gap-0">
-                    <div className="relative">
-                      <Image
-                        src={post.image}
-                        alt={post.title}
-                        width={520}
-                        height={320}
-                        className="h-48 w-full object-cover"
-                      />
-                      <Badge
-                        variant="secondary"
-                        className="absolute left-4 top-4 py-2 px-4 rounded-md"
-                      >
-                        {post.category}
-                      </Badge>
-                    </div>
-                    <CardContent className="space-y-3 p-5 text-primary">
-                      <h3 className="text-base font-semibold">{post.title}</h3>
-                      <p className="text-base text-muted-foreground">
-                        {post.excerpt}
-                      </p>
-                      <div className="flex items-center justify-between text-sm text-muted-foreground">
-                        <span>{new Date(post.date).toLocaleDateString()}</span>
-                        <Link
-                          href={`/blogs/${post.slug}`}
-                          className="font-semibold text-[#EE4312]"
+                  <Link href={`/blogs/${post.slug}`} className="group h-full">
+                    <Card className="flex h-full flex-col overflow-hidden bg-white py-0">
+                      <div className="relative h-48 overflow-hidden">
+                        <Image
+                          src={post.cover_image_url || fallbackImage}
+                          alt={post.title}
+                          fill
+                          className="object-cover transition duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-black/10" />
+                        <Badge
+                          variant="secondary"
+                          className="absolute left-4 top-4 rounded-md px-3 py-1 bg-muted capitalize"
                         >
-                          Read More
-                        </Link>
+                          {post.category || "Insights"}
+                        </Badge>
                       </div>
-                    </CardContent>
-                  </Card>
+                      <CardContent className="flex flex-1 flex-col space-y-3 px-5 pb-5 text-primary">
+                        <h3 className="text-base font-semibold">{post.title}</h3>
+                        {post.excerpt ? (
+                          <p className="text-base text-muted-foreground line-clamp-2">
+                            {post.excerpt}
+                          </p>
+                        ) : null}
+                        <div className="mt-auto flex items-center justify-between text-sm text-muted-foreground">
+                          {getPostDate(post) ? (
+                            <span>
+                              {new Date(getPostDate(post)).toLocaleDateString()}
+                            </span>
+                          ) : (
+                            <span>Recently added</span>
+                          )}
+                          <span className="font-semibold text-[#EE4312]">
+                            Read More
+                          </span>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
                 </motion.article>
               ))}
         </div>

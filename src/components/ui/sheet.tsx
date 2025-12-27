@@ -17,7 +17,7 @@ const SheetContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed inset-y-0 left-0 z-50 w-72 border-r border-primary/10 bg-white p-6 shadow-xl",
+        "fixed inset-y-0 left-0 z-50 border-r border-primary/10 bg-white px-4 py-6 sm:p-6 shadow-xl",
         className
       )}
       {...props}

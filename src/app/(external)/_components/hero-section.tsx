@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 
 export function HeroSection() {
   return (
-    <section id="hero" className="relative overflow-hidden bg-white">
+    <section id="hero" className="relative overflow-hidden bg-white scroll-mt-20">
       <div className="relative z-10 mx-auto flex max-w-7xl flex-col gap-14 px-4 pb-16 pt-10 md:px-10 lg:px-14">
         <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
           <motion.div

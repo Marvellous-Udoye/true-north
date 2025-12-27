@@ -43,7 +43,7 @@ export default function LoginPage() {
       });
 
       const payload = await response.json();
-      if (!response.ok) {
+      if (!response.ok || payload?.ok === false) {
         throw new Error(payload?.error || "Unable to authenticate email.");
       }
 

@@ -16,7 +16,7 @@ export const generateContactEmailTemplate = (data: ContactFormData): string => {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>New Contact Form Submission - TrueNorth Talent Advisory</title>
+    <title>New Contact - TrueNorth Talent Advisory</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -31,7 +31,7 @@ export const generateContactEmailTemplate = (data: ContactFormData): string => {
       }
 
       .email-container {
-        max-width: 500px;
+        max-width: 800px;
         margin: 20px auto;
         background: #000000;
         border: 1px solid #333333;
@@ -47,29 +47,13 @@ export const generateContactEmailTemplate = (data: ContactFormData): string => {
       }
 
       .logo-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
         margin-bottom: 8px;
       }
 
       .logo-img {
-        width: 32px;
-        height: 32px;
+        width: 100%;
+        height: 100%;
         border-radius: 8px;
-      }
-
-      .logo-text {
-        font-size: 24px;
-        font-weight: 700;
-        color: #ffffff;
-        margin: 0;
-      }
-
-      .header-subtitle {
-        color: #cccccc;
-        font-size: 14px;
         margin: 0;
       }
 
@@ -156,15 +140,11 @@ export const generateContactEmailTemplate = (data: ContactFormData): string => {
     <div class="email-container">
       <div class="header">
         <div class="logo-container">
-          <img src="https://res.cloudinary.com/ds6nd4lbj/image/upload/v1766790533/logo_fb7ofs.jpgg" alt="True North Talent Advisory Logo" class="logo-img" />
-          <h1 class="logo-text">True North Talent Advisory</h1>
+          <img src="https://res.cloudinary.com/ds6nd4lbj/image/upload/v1766790533/logo_fb7ofs.jpg" alt="True North Talent Advisory Logo" class="logo-img" />
         </div>
-        <p class="header-subtitle">New Contact Form Submission</p>
       </div>
 
       <div class="content">
-        <h2 class="submission-title">New Contact Form Submission</h2>
-
         <div class="field-group">
           <div class="field-label">
             <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-icon lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span> Full Name
@@ -208,7 +188,7 @@ export const generateContactEmailTemplate = (data: ContactFormData): string => {
 
         <div class="field-group message-field">
           <div class="field-label">
-            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-dot-icon lucide-folder-dot"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/><circle cx="12" cy="13" r="1"/></svg></span> Project Details
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-dot-icon lucide-folder-dot"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/><circle cx="12" cy="13" r="1"/></svg></span> Message
           </div>
           <div class="field-value">${data.message}</div>
         </div>

@@ -1,158 +1,229 @@
+import { Badge } from "@/components/ui/badge";
+import { SubscribeForm } from "@/components/subscribe-form";
+import { supabaseServerClientReadonly } from "@/lib/supabase/server";
+import { unstable_noStore as noStore } from "next/cache";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import { blogPosts } from "@/lib/blog-data";
 
-const otherArticles = [
-  {
-    slug: "tech-innovations-business",
-    title: "Tech Innovations Redefining the Business Landscape",
-    category: "Information Technology",
-    date: "December 20th, 2023",
-  },
-  {
-    slug: "financial-stewardship-principles",
-    title: "Key Principles for Effective Financial Stewardship",
-    category: "Financial",
-    date: "December 22nd, 2023",
-  },
-  {
-    slug: "contemporary-market-strategies",
-    title: "Strategies for Conquering Contemporary Markets",
-    category: "Marketing",
-    date: "December 26th, 2023",
-  },
-  {
-    slug: "design-industry-challenges",
-    title: "Overcoming Challenges in the Design Industry",
-    category: "Design",
-    date: "December 28th, 2023",
-  },
-];
+const fallbackImage = "/assets/hero-img.svg";
+
+type BlogPost = {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string | null;
+  category: string | null;
+  author: string | null;
+  cover_image_url: string | null;
+  content: string | null;
+  published_at: string | null;
+  created_at: string | null;
+};
+
+const getReadTime = (content: string | null, excerpt: string | null) => {
+  const text = (content || excerpt || "").replace(/<[^>]+>/g, " ");
+  const words = text.trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(3, Math.ceil(words / 200));
+};
+
+const getTags = (post: BlogPost) => {
+  const tags = [post.category, "Talent Advisory", "Leadership"].filter(
+    (tag): tag is string => Boolean(tag)
+  );
+  return Array.from(new Set(tags)).slice(0, 4);
+};
+
+const getInitials = (name: string | null) => {
+  if (!name) return "TN";
+  return name
+    .split(" ")
+    .map((part) => part[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+};
 
 export default async function BlogDetailPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
+  noStore();
   const { slug } = await params;
-  const post = blogPosts.find((item) => item.slug === slug);
+  const decodedSlug = decodeURIComponent(slug);
+  const supabase = supabaseServerClientReadonly();
+
+  const slugFilter = decodedSlug.replace(/,/g, "\\,");
+  const { data: post } = await supabase
+    .from("blogs")
+    .select(
+      "id, title, slug, excerpt, category, author, cover_image_url, content, published_at, created_at"
+    )
+    .or(`slug.eq.${slugFilter},title.eq.${slugFilter}`)
+    .eq("status", "published")
+    .maybeSingle();
 
   if (!post) {
     notFound();
   }
 
-  const contentBlocks =
-    post.content && post.content.length > 0
-      ? post.content
-      : [
-          {
-            heading: "What happen to modern marketing now?",
-            body:
-              "Discover the dynamic realm of modern marketing through our latest insights. In an era marked by technological evolution, our comprehensive analysis delves into groundbreaking strategies shaping the industry.",
-          },
-          {
-            heading: "1. AI-Powered Personalization: The Next Frontier",
-            body:
-              "Artificial intelligence continues to be a driving force, with its applications in marketing becoming increasingly sophisticated. Our latest insights explore how AI is revolutionizing personalization strategies.",
-          },
-          {
-            heading: "2. Rise of Virtual Events: Redefining Audience Engagement",
-            body:
-              "The global shift towards remote interactions has catalyzed the rise of virtual events. This segment explores how businesses are leveraging digital platforms to maximize reach.",
-          },
-          {
-            heading: "3. Sustainable Marketing Practices: More Than a Trend",
-            body:
-              "Sustainability is no longer a peripheral concern. Learn how brands are integrating sustainable practices into their marketing strategies and messaging.",
-          },
-          {
-            heading: "4. Shoppable Content: Seamless Path from Inspiration to Purchase",
-            body:
-              "Discover the strategies behind successful shoppable content and the integration of e-commerce into digital experiences.",
-          },
-          {
-            heading: "5. Privacy-Centric Marketing in the Digital Age",
-            body:
-              "With increasing concerns about data privacy, learn how transparent practices can build trust and maintain engagement.",
-          },
-        ];
+  const { data: morePosts } = await supabase
+    .from("blogs")
+    .select(
+      "id, title, slug, excerpt, category, author, cover_image_url, content, published_at, created_at"
+    )
+    .eq("status", "published")
+    .neq("slug", decodedSlug)
+    .order("published_at", { ascending: false })
+    .order("created_at", { ascending: false })
+    .limit(3);
+
+  const postDate = post.published_at || post.created_at;
+  const readTime = getReadTime(post.content, post.excerpt);
+  const tags = getTags(post);
 
   return (
-    <main className="bg-[#f7f9fc]">
-      <section className="relative overflow-hidden bg-white py-16 md:py-20">
-        <div
-          className="pointer-events-none absolute right-10 top-6 h-24 w-48 opacity-60"
-          style={{
-            backgroundImage: "url('/assets/hero-dots.svg')",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "right top",
-          }}
-          aria-hidden="true"
+    <main className="bg-[#f7f9fc] text-primary">
+      <section className="relative min-h-[520px] overflow-hidden">
+        <Image
+          src={post.cover_image_url || fallbackImage}
+          alt={post.title}
+          fill
+          className="object-cover"
+          priority
         />
-        <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 md:px-10 lg:px-14">
-          <h1 className="text-3xl font-bold text-primary md:text-4xl">
-            {post.title}
-          </h1>
-            <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-              <Badge variant="accent">{post.category}</Badge>
-              <span>{new Date(post.date).toLocaleDateString()}</span>
-              <span>by {post.author}</span>
+        <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-white/25 to-[#f7f9fc]" />
+        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-[#f7f9fc]" />
+      </section>
+
+      <section className="pb-16 pt-10 md:pb-20">
+        <div className="mx-auto max-w-5xl px-4 md:px-8">
+          <div className="mb-8 space-y-4">
+            <div className="w-full">
+              <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+                <Badge variant="secondary" className="rounded-full px-3 py-1">
+                  {post.category || "Insights"}
+                </Badge>
+                {postDate ? (
+                  <span>{new Date(postDate).toLocaleDateString()}</span>
+                ) : null}
+                <span>{readTime} min read</span>
+              </div>
+              <h1 className="mt-3 text-2xl font-semibold leading-tight text-primary md:text-4xl">
+                {post.title}
+              </h1>
             </div>
-          <div className="overflow-hidden rounded-3xl">
-            <Image
-              src={post.image}
-              alt={post.title}
-              width={900}
-              height={480}
-              className="h-auto w-full object-cover"
-              priority
-            />
+            {post.excerpt ? (
+              <p className="max-w-2xl text-base text-muted-foreground md:text-lg">
+                {post.excerpt}
+              </p>
+            ) : null}
+            <div className="flex flex-wrap items-center gap-4 border-t border-primary/10 pt-4 text-sm text-muted-foreground">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
+                  {getInitials(post.author)}
+                </div>
+                <div>
+                  <p className="text-primary">
+                    {post.author || "TrueNorth Editorial"}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    Talent Advisory
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="blog-content text-base leading-relaxed text-muted-foreground"
+            dangerouslySetInnerHTML={{
+              __html:
+                post.content ||
+                "<p>We are preparing insights for this article. Please check back soon.</p>",
+            }}
+          />
+          <div className="mt-10 flex flex-wrap gap-2">
+            {tags.map((tag) => (
+              <span
+                key={tag}
+                className="rounded-full bg-white px-4 py-2 text-xs text-muted-foreground shadow-sm"
+              >
+                #{tag}
+              </span>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="py-10 md:py-16">
-        <div className="mx-auto grid max-w-6xl gap-8 px-4 md:px-10 lg:grid-cols-[2fr_1fr] lg:px-14">
-          <Card className="rounded-3xl">
-            <CardContent className="space-y-6 p-6 text-sm text-muted-foreground">
-            {contentBlocks.map((section) => (
-              <div key={section.heading} className="space-y-2">
-                <h2 className="text-base font-semibold text-primary">
-                  {section.heading}
-                  </h2>
-                  <p>{section.body}</p>
-                </div>
-              ))}
-              <p>
-                We continue to uncover the latest insights into modern marketing, our commitment is
-                to provide a roadmap for businesses navigating this ever-evolving landscape.
-              </p>
-            </CardContent>
-          </Card>
+      <section className="pb-16 md:pb-20">
+        <div className="mx-auto max-w-4xl px-4 md:px-8">
+          <div className="rounded-3xl bg-white px-6 py-10 text-center text-primary shadow-sm md:px-10">
+            <h2 className="text-2xl font-semibold">Enjoyed this article?</h2>
+            <p className="mt-2 text-sm text-primary/70">
+              Subscribe to receive more insights like this directly in your
+              inbox.
+            </p>
+            <SubscribeForm className="mx-auto mt-6 max-w-md w-full" />
+          </div>
+        </div>
+      </section>
 
-          <aside className="space-y-4">
-            <h3 className="text-base font-semibold text-primary">Other Articles</h3>
-            <Card className="rounded-3xl">
-              <CardContent className="space-y-4 p-4">
-                {otherArticles.map((article) => (
-                  <Link
-                    key={article.slug}
-                    href={`/blogs/${article.slug}`}
-                    className="block rounded-2xl border border-primary/10 p-4 transition hover:border-primary/30"
-                  >
-                    <p className="text-sm font-semibold text-primary">{article.title}</p>
-                    <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-                      <Badge variant="secondary">{article.category}</Badge>
-                      <span>{article.date}</span>
+      <section className="pb-20">
+        <div className="mx-auto max-w-6xl px-4 md:px-8">
+          <h2 className="text-2xl font-semibold">More articles</h2>
+          <div className="mt-6 grid gap-6 md:grid-cols-3">
+            {(morePosts ?? []).map((article) => {
+              const articleDate = article.published_at || article.created_at;
+              return (
+                <Link
+                  key={article.id}
+                  href={`/blogs/${article.slug}`}
+                  className="group h-full"
+                >
+                  <div className="flex h-full flex-col overflow-hidden rounded-3xl bg-white shadow-sm transition hover:-translate-y-1">
+                    <div className="relative h-48 overflow-hidden">
+                      <Image
+                        src={article.cover_image_url || fallbackImage}
+                        alt={article.title}
+                        fill
+                        className="object-cover transition duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-black/10" />
+                      <Badge
+                        variant="secondary"
+                        className="absolute left-4 top-4 rounded-md px-3 py-1 bg-muted capitalize"
+                      >
+                        {article.category || "Insights"}
+                      </Badge>
                     </div>
-                  </Link>
-                ))}
-              </CardContent>
-            </Card>
-          </aside>
+                    <div className="flex flex-1 flex-col space-y-3 px-5 pb-5 pt-4 text-primary">
+                      <h3 className="text-base font-semibold">
+                        {article.title}
+                      </h3>
+                      {article.excerpt ? (
+                        <p className="text-base text-muted-foreground line-clamp-2">
+                          {article.excerpt}
+                        </p>
+                      ) : null}
+                      <div className="mt-auto flex items-center justify-between text-sm text-muted-foreground">
+                        {articleDate ? (
+                          <span>
+                            {new Date(articleDate).toLocaleDateString()}
+                          </span>
+                        ) : (
+                          <span>Recently added</span>
+                        )}
+                        <span className="font-semibold text-[#EE4312]">
+                          Read More
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
         </div>
       </section>
     </main>

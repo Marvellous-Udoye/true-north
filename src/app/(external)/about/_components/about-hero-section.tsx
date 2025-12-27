@@ -17,7 +17,7 @@ export function AboutHeroSection() {
   return (
     <section
       id="about-hero"
-      className="relative overflow-hidden bg-white py-16 md:py-20"
+      className="relative overflow-hidden bg-white py-16 md:py-20 scroll-mt-20"
     >
       <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 md:px-10 lg:grid-cols-[1.05fr_0.95fr] lg:px-14">
         <motion.div

@@ -1,14 +1,38 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Bold, Italic, Redo, Undo, UploadCloud } from "lucide-react";
+import { UploadCloud } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { supabaseBrowserClient } from "@/lib/supabase/client";
 import Image from "next/image";
+import { RichTextProvider } from "reactjs-tiptap-editor";
+import { EditorContent, useEditor } from "@tiptap/react";
+import { Document } from "@tiptap/extension-document";
+import { Text } from "@tiptap/extension-text";
+import { Paragraph } from "@tiptap/extension-paragraph";
+import {
+  Dropcursor,
+  Gapcursor,
+  Placeholder,
+  TrailingNode,
+} from "@tiptap/extensions";
+import { HardBreak } from "@tiptap/extension-hard-break";
+import { TextStyle } from "@tiptap/extension-text-style";
+import { ListItem } from "@tiptap/extension-list";
+import { BLOG_CATEGORIES } from "@/lib/blog-categories";
+import "reactjs-tiptap-editor/style.css";
 
 type BlogFormValues = {
   title: string;
@@ -37,10 +61,51 @@ type BlogFormProps = {
 };
 
 export function BlogForm({ blogId }: BlogFormProps) {
+  const router = useRouter();
   const [form, setForm] = useState<BlogFormValues>(emptyForm);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoading, setIsLoading] = useState(!!blogId);
   const [uploadingImage, setUploadingImage] = useState(false);
+
+  const handleChange = (field: keyof BlogFormValues, value: string) => {
+    setForm((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const extensions = useMemo(
+    () => [
+      Document,
+      Text,
+      Dropcursor,
+      Gapcursor,
+      HardBreak,
+      Paragraph,
+      TrailingNode,
+      ListItem,
+      TextStyle,
+      Placeholder.configure({
+        placeholder: "Press '/' for commands",
+      }),
+    ],
+    []
+  );
+
+  const editor = useEditor({
+    extensions,
+    content: form.content || "",
+    immediatelyRender: false,
+    onUpdate: ({ editor }) => {
+      handleChange("content", editor.getHTML());
+    },
+  });
+
+  useEffect(() => {
+    if (!editor) return;
+    const current = editor.getHTML();
+    const nextContent = form.content || "";
+    if (current !== nextContent) {
+      editor.commands.setContent(nextContent, { emitUpdate: false });
+    }
+  }, [editor, form.content]);
 
   useEffect(() => {
     if (!blogId) return;
@@ -74,33 +139,38 @@ export function BlogForm({ blogId }: BlogFormProps) {
     fetchBlog();
   }, [blogId]);
 
-  const handleChange = (field: keyof BlogFormValues, value: string) => {
-    setForm((prev) => ({ ...prev, [field]: value }));
-  };
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = async (
+    event?: React.FormEvent<HTMLFormElement>,
+    nextStatus?: BlogFormValues["status"]
+  ) => {
+    event?.preventDefault();
     setIsSubmitting(true);
 
     try {
       const supabase = supabaseBrowserClient();
+      const status = nextStatus ?? form.status;
       const payload = {
         ...form,
-        published_at: form.status === "published" ? new Date().toISOString() : null,
+        status,
+        published_at: status === "published" ? new Date().toISOString() : null,
       };
 
       if (blogId) {
-        const { error } = await supabase.from("blogs").update(payload).eq("id", blogId);
+        const { error } = await supabase
+          .from("blogs")
+          .update(payload)
+          .eq("id", blogId);
         if (error) throw error;
         toast.success("Blog updated.");
       } else {
         const { error } = await supabase.from("blogs").insert(payload);
         if (error) throw error;
-        toast.success("Blog created.");
-        setForm(emptyForm);
+        toast.success(status === "draft" ? "Draft saved." : "Blog created.");
       }
+      router.push("/dashboard/blogs");
     } catch (error) {
-      const message = error instanceof Error ? error.message : "Unable to save blog.";
+      const message =
+        error instanceof Error ? error.message : "Unable to save blog.";
       toast.error(message);
     } finally {
       setIsSubmitting(false);
@@ -190,27 +260,43 @@ export function BlogForm({ blogId }: BlogFormProps) {
               </label>
             </div>
             {form.cover_image_url ? (
-              <div className="overflow-hidden rounded-2xl border border-primary/10">
+              <div className="relative h-48 overflow-hidden rounded-2xl border border-primary/10">
                 <Image
                   src={form.cover_image_url}
                   alt="Cover preview"
                   fill
-                  className="h-48 w-full object-cover"
+                  className="object-cover"
                 />
               </div>
             ) : null}
           </div>
           <div className="grid gap-4 md:grid-cols-2">
-            <Input
-              value={form.category}
-              onChange={(event) => handleChange("category", event.target.value)}
-              placeholder="Category"
-            />
-            <Input
-              value={form.author}
-              onChange={(event) => handleChange("author", event.target.value)}
-              placeholder="Author"
-            />
+            <label className="space-y-2 text-sm font-medium text-primary">
+              Category
+              <Select
+                value={form.category}
+                onValueChange={(value) => handleChange("category", value)}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select category" />
+                </SelectTrigger>
+                <SelectContent>
+                  {BLOG_CATEGORIES.map((category) => (
+                    <SelectItem key={category} value={category}>
+                      {category}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </label>
+            <label className="space-y-2 text-sm font-medium text-primary">
+              Author
+              <Input
+                value={form.author}
+                onChange={(event) => handleChange("author", event.target.value)}
+                placeholder="Author"
+              />
+            </label>
           </div>
           <Textarea
             value={form.excerpt}
@@ -218,71 +304,35 @@ export function BlogForm({ blogId }: BlogFormProps) {
             placeholder="Excerpt"
           />
           <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <Button
-                type="button"
-                variant="outline"
-                size="icon-sm"
-                onClick={() => document.execCommand("bold")}
-              >
-                <Bold className="h-4 w-4" />
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                size="icon-sm"
-                onClick={() => document.execCommand("italic")}
-              >
-                <Italic className="h-4 w-4" />
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                size="icon-sm"
-                onClick={() => document.execCommand("undo")}
-              >
-                <Undo className="h-4 w-4" />
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                size="icon-sm"
-                onClick={() => document.execCommand("redo")}
-              >
-                <Redo className="h-4 w-4" />
-              </Button>
+            <p className="text-sm font-medium text-primary">Content</p>
+            <div className="rounded-md border border-primary/10 bg-white px-3 py-2 text-sm text-primary shadow-sm">
+              {editor ? (
+                <RichTextProvider editor={editor} dark={false}>
+                  <EditorContent editor={editor} className="min-h-[260px]" />
+                </RichTextProvider>
+              ) : (
+                <div className="min-h-[260px] rounded-md bg-primary/5" />
+              )}
             </div>
-            <div
-              contentEditable
-              className="min-h-[240px] rounded-md border border-primary/10 bg-white px-3 py-2 text-sm text-primary shadow-sm outline-none focus:border-[#EE4312]"
-              onInput={(event) =>
-                handleChange("content", (event.target as HTMLDivElement).innerHTML)
-              }
-              dangerouslySetInnerHTML={{ __html: form.content }}
-            />
           </div>
           <div className="flex flex-wrap gap-3">
             <Button
               type="button"
-              variant="outline"
-              onClick={() => handleChange("status", "draft")}
+              onClick={() => handleSubmit(undefined, "draft")}
             >
               Save as draft
             </Button>
             <Button
               type="button"
-              variant="outline"
-              onClick={() => handleChange("status", "published")}
+              onClick={() => handleSubmit(undefined, "published")}
             >
-              Set as published
+              Publish blog
             </Button>
-            <Button
-              type="submit"
-              className="bg-[#EE4312] text-white hover:bg-[#cf3a10]"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? "Saving..." : "Save changes"}
-            </Button>
+            {blogId ? (
+              <Button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Saving..." : "Save changes"}
+              </Button>
+            ) : null}
           </div>
         </form>
       </CardContent>

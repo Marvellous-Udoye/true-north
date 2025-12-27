@@ -1,7 +1,10 @@
-"use client";
-
 import { BlogForm } from "../../_components/blog-form";
 
-export default function DashboardEditBlogPage({ params }: { params: { id: string } }) {
-  return <BlogForm blogId={params.id} />;
+export default async function DashboardEditBlogPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  return <BlogForm blogId={id} />;
 }
