@@ -9,29 +9,29 @@ import {
 
 const faqs = [
   {
-    question: "What services do you offer?",
+    question: "What does TrueNorth Talent Advisory do?",
     answer:
-      "We deliver executive search, strategic recruitment advisory, and bespoke talent solutions that align with your growth goals and organizational structure.",
+      "We provide strategic recruitment and talent advisory services, connecting organizations with exceptional talent and guiding professionals toward the right career opportunities.",
   },
   {
-    question: "How can your firm help improve our business?",
+    question: "Who do you work with?",
     answer:
-      "We focus on structured hiring playbooks, stakeholder alignment, and fast feedback loops that shorten time-to-hire while improving retention and team fit.",
+      "We work with growth-focused companies and professionals across Technology, SaaS, Engineering, Operations, Supply Chain, Corporate Services, and Professional Services.",
   },
   {
-    question: "What experience do you have in our industry?",
+    question: "Do you work with both clients and candidates?",
     answer:
-      "Our advisory team has led searches across Technology, SaaS, Engineering, Operations, and Professional Services, tailoring each engagement to the market.",
+      "Yes. We partner with organizations seeking top talent and support professionals through career advisory, job matching, and interview preparation.",
   },
   {
-    question: "What is your approach or methodology?",
+    question: "How do I get started?",
     answer:
-      "We begin with discovery and scorecards, move through market mapping and outreach, then guide interviews, selection, and closing with weekly updates.",
+      "You can book a consultation directly through our website or contact us to discuss your hiring or career needs.",
   },
   {
-    question: "Can you provide references or case studies?",
+    question: "Do you offer customized solutions?",
     answer:
-      "Yes. We can share anonymized case studies and connect you with references aligned with your industry and hiring scope.",
+      "Absolutely. All our services are tailored to align with your specific goals, challenges, and timelines.",
   },
 ];
 

@@ -11,6 +11,7 @@ const navLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About Us" },
   { href: "/#services", label: "Services" },
+  { href: "/blogs", label: "Blogs" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -62,12 +63,12 @@ export function Navbar() {
             ))}
           </nav>
           <div className="flex items-center gap-3">
-            <Button asChild className="hidden md:inline-flex">
-              <Link href="/contact">Book an Appointment</Link>
+            <Button asChild className="hidden lg:inline-flex">
+              <Link href="/contact#contact-form">Book an Appointment</Link>
             </Button>
             <button
               type="button"
-              className="inline-flex items-center justify-center text-primary transition hover:bg-primary/5 md:hidden"
+              className="inline-flex items-center justify-center text-primary transition lg:hidden cursor-pointer"
               aria-label="Toggle menu"
               onClick={() => setOpen((prev) => !prev)}
             >
@@ -89,7 +90,7 @@ export function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm md:hidden"
+            className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm lg:hidden"
             onClick={() => setOpen(false)}
           >
             <motion.div
@@ -110,7 +111,7 @@ export function Navbar() {
                 />
                 <button
                   type="button"
-                  className="text-primary hover:bg-primary/5"
+                  className="text-primary cursor-pointer"
                   aria-label="Close menu"
                   onClick={() => setOpen(false)}
                 >
@@ -130,7 +131,7 @@ export function Navbar() {
                 ))}
               </div>
               <Button asChild className="w-full" size="lg">
-                <Link href="/contact">Book an Appointment</Link>
+                <Link href="/contact#contact-form">Book an Appointment</Link>
               </Button>
             </motion.div>
           </motion.div>

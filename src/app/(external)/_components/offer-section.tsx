@@ -5,38 +5,32 @@ import { motion } from "framer-motion";
 
 const offers = [
   {
-    title: "Method Development",
+    title: "Executive Search & Strategic Recruitment",
     description:
-      "Strategic method development for business excellence and progress.",
+      " Identifying and securing high-impact talent aligned with organizational goals.",
     icon: "/assets/offer-1.svg",
   },
   {
-    title: "Quality Assurance",
+    title: "Talent Advisory & Workforce Planning",
     description:
-      "Quality excellence for optimal and sustainable business operation.",
+      "Advising organizations on hiring strategy, talent structure, and growth readiness.",
     icon: "/assets/offer-2.svg",
   },
   {
-    title: "Human Resources",
-    description: "Optimize human resources for sustainable business growth.",
+    title: "Custom Talent Solutions",
+    description: "Bespoke recruitment support tailored to unique business needs.",
     icon: "/assets/offer-3.svg",
   },
   {
-    title: "Policy Compliance",
+    title: "Career Consultation & Advisory",
     description:
-      "Strategic policy compliance for seamless business operations.",
+      "Supporting professionals with career direction, positioning, and opportunity alignment.",
     icon: "/assets/offer-4.svg",
   },
   {
-    title: "Business Strategies",
+    title: "Resume, Interview & Job Matching Support",
     description:
-      "Unlocking growth potential using dynamic business strategies.",
-    icon: "/assets/offer-5.svg",
-  },
-  {
-    title: "Management System",
-    description:
-      "Maximize productivity with our advanced management structure.",
+      " Helping candidates present themselves effectively and connect with suitable roles.",
     icon: "/assets/offer-6.svg",
   },
 ];
@@ -59,8 +53,7 @@ export function OfferSection() {
             What We Can Offer You
           </p>
           <p className="max-w-2xl text-base text-muted-foreground">
-            Optimize your journey with our consulting services, delivering personalized solutions
-            for success.
+            Optimize your hiring and career journey with strategic talent advisory and recruitment solutions designed to deliver the right people, aligned with your goals.
           </p>
         </div>
 

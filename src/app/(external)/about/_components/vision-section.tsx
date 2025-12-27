@@ -29,14 +29,20 @@ export function VisionSection() {
           className="space-y-5"
         >
           <h2 className="text-3xl font-bold md:text-4xl">
-            We Create Best Solution for You
+            We Deliver the Right Talent Solutions
           </h2>
           <p className="max-w-xl text-base text-white/70 md:text-base">
-            We specialize in crafting bespoke solutions tailored to your unique
-            needs, ensuring that our services not only meet but exceed your
-            expectations, bringing the best results for your satisfaction.
+            We specialize in providing bespoke recruitment and talent advisory
+            services designed around your organization&apos;s needs. From executive
+            search to strategic recruitment guidance, our focus is on delivering
+            outcomes—not just filling roles. Every engagement is built on
+            clarity, alignment, and trust, ensuring results that exceed
+            expectations.
           </p>
-          <Button asChild className="bg-[#EE4312] text-white hover:bg-[#cf3a10]">
+          <Button
+            asChild
+            className="bg-[#EE4312] text-white hover:bg-[#cf3a10]"
+          >
             <Link href="/contact">Collaborate with Us</Link>
           </Button>
         </motion.div>

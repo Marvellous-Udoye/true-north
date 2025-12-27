@@ -32,9 +32,8 @@ export function ContactHeroSection() {
           <h1 className="text-3xl font-bold leading-tight text-primary md:text-4xl">
             Reach Out to Us Right Away
           </h1>
-          <p className="max-w-xl text-base text-muted-foreground md:text-base">
-            Connect now for swift assistance and discover the benefits of reaching out to us
-            immediately for personalized solutions and support.
+          <p className="max-w-xl text-base text-muted-foreground">
+            Connect with us to discuss your talent needs and discover how our advisory approach can support your goals.
           </p>
           <Button asChild className="bg-[#EE4312] text-white hover:bg-[#cf3a10]">
             <Link href="/contact#contact-form">Collaborate with Us</Link>
@@ -47,9 +46,9 @@ export function ContactHeroSection() {
               </span>
               <div>
                 <p className="text-base font-semibold uppercase tracking-[0.14em] text-primary/70">
-                  Headquarter Email
+                  Email
                 </p>
-                <p className="text-sm text-primary">hello@truenorth.com</p>
+                <p className="text-sm text-primary">truenorthtalentadvisory@gmail.com</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -58,9 +57,9 @@ export function ContactHeroSection() {
               </span>
               <div>
                 <p className="text-base font-semibold uppercase tracking-[0.14em] text-primary/70">
-                  Headquarter Phone Number
+                  Monday - Friday
                 </p>
-                <p className="text-sm text-primary">+1 (415) 555-0198</p>
+                <p className="text-sm text-primary">10AM - 4PM</p>
               </div>
             </div>
           </div>

@@ -5,13 +5,6 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
-const stats = [
-  { value: "160", label: "Client Project" },
-  { value: "340", label: "Successful Project" },
-  { value: "300+", label: "Team Members" },
-  { value: "82M", label: "Total Revenue" },
-];
-
 export function HeroSection() {
   return (
     <section id="hero" className="relative overflow-hidden bg-white">
@@ -27,17 +20,22 @@ export function HeroSection() {
             <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.18em] text-primary">
               TrueNorth Talent Advisory
             </p>
-            <h1 className="mt-4 mb-6 text-balance text-2xl sm:text-3xl font-bold leading-tight text-primary md:text-4xl lg:text-5xl">
+            <h1 className="mt-4 mb-6 text-balance text-2xl sm:text-3xl font-bold leading-tight text-primary md:text-4xl lg:text-[40px]">
               Strategic Talent Advisory Connecting Exceptional Candidates with
               Leading Organizations.
             </h1>
-            <p className="max-w-xl text-base text-muted-foreground md:text-lg">
-              Experience a rise in your pursuits with our expert consulting. We
-              tailor success strategies to your unique goals, covering diverse
-              fields for maximum impact.
+            <p className="max-w-xl text-sm sm:text-base text-muted-foreground ">
+              TrueNorth Talent Advisory helps organizations and professionals
+              find the right fit - strategically, thoughtfully, and with purpose.
+              We connect exceptional candidates with leading organizations,
+              offering tailored recruitment solutions and trusted career
+              guidance.
             </p>
             <div className="flex flex-wrap items-center gap-4 my-6">
-              <Button asChild className="bg-[#EE4312] text-white hover:bg-[#cf3a10]">
+              <Button
+                asChild
+                className="bg-[#EE4312] text-white hover:bg-[#cf3a10]"
+              >
                 <Link href="/contact">Collaborate with Us</Link>
               </Button>
               <Button
@@ -69,26 +67,6 @@ export function HeroSection() {
               />
             </div>
           </motion.div>
-        </div>
-
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-t border-primary/10 pt-8">
-          <div className="space-y-2 ">
-            <p className="text-2xl font-semibold text-primary">
-              This is our result
-            </p>
-            <p className="max-w-xl text-base text-muted-foreground">
-              How capable we are at work shines through in every endeavor.
-            </p>
-          </div>
-
-          <div className="grid gap-6 text-primary grid-cols-2 sm:grid-cols-4">
-            {stats.map((stat) => (
-              <div key={stat.label} className="space-y-1">
-                <p className="text-3xl lg:text-4xl font-bold">{stat.value}</p>
-                <p className="text-sm text-muted-foreground">{stat.label}</p>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </section>

@@ -33,12 +33,16 @@ export function AboutHeroSection() {
           <h1 className="text-3xl font-bold leading-tight text-primary md:text-4xl lg:text-5xl">
             Clients Success is Our Focus
           </h1>
-          <p className="max-w-xl text-base text-muted-foreground md:text-base">
-            Committed to your success, our consulting firm delivers tailored
-            strategies and expert guidance, ensuring business excellence through
-            precise solutions and strategic expertise for sustainable growth.
+          <p className="max-w-xl text-base text-muted-foreground ">
+            Committed to your success, TrueNorth Talent Advisory delivers
+            strategic recruitment and talent advisory solutions, helping
+            organizations attract, retain, and develop the right talent to drive
+            sustainable growth and long-term business excellence.
           </p>
-          <Button asChild className="bg-[#EE4312] text-white hover:bg-[#cf3a10]">
+          <Button
+            asChild
+            className="bg-[#EE4312] text-white hover:bg-[#cf3a10]"
+          >
             <Link href="/contact">Collaborate with Us</Link>
           </Button>
         </motion.div>
