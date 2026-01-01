@@ -14,7 +14,6 @@ type BlogPost = {
   title: string;
   excerpt: string | null;
   category: string | null;
-  author: string | null;
   cover_image_url: string | null;
   content: string | null;
   published_at: string | null;
@@ -34,16 +33,6 @@ const getTags = (post: BlogPost) => {
   return Array.from(new Set(tags)).slice(0, 4);
 };
 
-const getInitials = (name: string | null) => {
-  if (!name) return "TN";
-  return name
-    .split(" ")
-    .map((part) => part[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
-};
-
 export default async function BlogDetailPage({
   params,
 }: {
@@ -58,7 +47,7 @@ export default async function BlogDetailPage({
   const { data: post } = await supabase
     .from("blogs")
     .select(
-      "id, title, slug, excerpt, category, author, cover_image_url, content, published_at, created_at"
+      "id, title, slug, excerpt, category, cover_image_url, content, published_at, created_at"
     )
     .or(`slug.eq.${slugFilter},title.eq.${slugFilter}`)
     .eq("status", "published")
@@ -71,7 +60,7 @@ export default async function BlogDetailPage({
   const { data: morePosts } = await supabase
     .from("blogs")
     .select(
-      "id, title, slug, excerpt, category, author, cover_image_url, content, published_at, created_at"
+      "id, title, slug, excerpt, category, cover_image_url, content, published_at, created_at"
     )
     .eq("status", "published")
     .neq("slug", decodedSlug)
@@ -84,8 +73,8 @@ export default async function BlogDetailPage({
   const tags = getTags(post);
 
   return (
-    <main className="bg-[#f7f9fc] text-primary">
-      <section className="relative min-h-[520px] overflow-hidden">
+    <main className="bg-white text-primary">
+      <section className="relative min-h-130 overflow-hidden">
         <Image
           src={post.cover_image_url || fallbackImage}
           alt={post.title}
@@ -93,8 +82,8 @@ export default async function BlogDetailPage({
           className="object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-white/25 to-[#f7f9fc]" />
-        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-[#f7f9fc]" />
+        <div className="absolute inset-0 bg-linear-to-b from-transparent via-white/25 to-[#f7f9fc]" />
+        <div className="absolute inset-x-0 bottom-0 h-24 bg-linear-to-b from-transparent to-white" />
       </section>
 
       <section className="pb-16 pt-10 md:pb-20">
@@ -119,24 +108,9 @@ export default async function BlogDetailPage({
                 {post.excerpt}
               </p>
             ) : null}
-            <div className="flex flex-wrap items-center gap-4 border-t border-primary/10 pt-4 text-sm text-muted-foreground">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
-                  {getInitials(post.author)}
-                </div>
-                <div>
-                  <p className="text-primary">
-                    {post.author || "TrueNorth Editorial"}
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    Talent Advisory
-                  </p>
-                </div>
-              </div>
-            </div>
           </div>
           <div
-            className="blog-content text-base leading-relaxed text-muted-foreground"
+            className="blog-content reactjs-tiptap-editor-theme text-base leading-relaxed text-muted-foreground"
             dangerouslySetInnerHTML={{
               __html:
                 post.content ||
@@ -157,8 +131,8 @@ export default async function BlogDetailPage({
       </section>
 
       <section className="pb-16 md:pb-20">
-        <div className="mx-auto max-w-4xl px-4 md:px-8">
-          <div className="rounded-3xl bg-white px-6 py-10 text-center text-primary shadow-sm md:px-10">
+        <div className="mx-auto max-w-4xl px-4 md:px-8 ">
+          <div className="rounded-3xl bg-white px-6 py-10 text-center text-primary border shadow-sm md:px-10">
             <h2 className="text-2xl font-semibold">Enjoyed this article?</h2>
             <p className="mt-2 text-sm text-primary/70">
               Subscribe to receive more insights like this directly in your
@@ -169,7 +143,7 @@ export default async function BlogDetailPage({
         </div>
       </section>
 
-      <section className="pb-20">
+      <section className="py-20 bg-[#f7f9fc]">
         <div className="mx-auto max-w-6xl px-4 md:px-8">
           <h2 className="text-2xl font-semibold">More articles</h2>
           <div className="mt-6 grid gap-6 md:grid-cols-3">

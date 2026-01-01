@@ -3,7 +3,6 @@ export type BlogPost = {
   title: string;
   category: string;
   date: string;
-  author: string;
   excerpt: string;
   image: string;
   content?: { heading: string; body: string }[];
@@ -15,7 +14,6 @@ export const blogPosts: BlogPost[] = [
     title: "Latest Insights into Modern Marketing",
     category: "Marketing",
     date: "2023-12-18",
-    author: "Liam Anderson",
     excerpt:
       "Discover the dynamic realm of modern marketing through our latest insights. In an era marked by technological evolution...",
     image: "/assets/hero-img.svg",
@@ -57,7 +55,6 @@ export const blogPosts: BlogPost[] = [
     title: "Tech Innovations Redefining the Business Landscape",
     category: "Information Technology",
     date: "2023-12-20",
-    author: "Nora Fields",
     excerpt:
       "In the ever-evolving business landscape, groundbreaking tech innovations are reshaping the way enterprises operate...",
     image: "/assets/about-us.svg",
@@ -74,7 +71,6 @@ export const blogPosts: BlogPost[] = [
     title: "Key Principles for Effective Financial Stewardship",
     category: "Financial",
     date: "2023-12-22",
-    author: "Marcus Lee",
     excerpt:
       "Effective financial stewardship hinges on a set of key principles that guide decision-making and long-term growth...",
     image: "/assets/our-work-2.svg",
@@ -91,7 +87,6 @@ export const blogPosts: BlogPost[] = [
     title: "Strategies for Conquering Contemporary Markets",
     category: "Marketing",
     date: "2023-12-26",
-    author: "Rosa Patel",
     excerpt:
       "Conquering contemporary markets requires more than a strong product. It takes sharp positioning and execution...",
     image: "/assets/offer-5.svg",
@@ -101,7 +96,6 @@ export const blogPosts: BlogPost[] = [
     title: "Overcoming Challenges in the Design Industry",
     category: "Design",
     date: "2023-12-28",
-    author: "Dylan Price",
     excerpt:
       "In the dynamic world of design, industry professionals encounter constant shifts in tools, trends, and expectations...",
     image: "/assets/benefit-2.svg",
@@ -111,7 +105,6 @@ export const blogPosts: BlogPost[] = [
     title: "Identifying and Exploiting Untapped Business Avenues",
     category: "Business",
     date: "2024-01-02",
-    author: "Avery Brooks",
     excerpt:
       "The ever-evolving scope of business uncovers new paths. This article dives into spotting and seizing opportunities...",
     image: "/assets/our-work-3.svg",
@@ -121,7 +114,6 @@ export const blogPosts: BlogPost[] = [
     title: "Seizing Opportunities for Entrepreneurial Success",
     category: "Information Technology",
     date: "2024-01-07",
-    author: "Jordan Cole",
     excerpt:
       "In a rapidly changing business climate, entrepreneurs must identify and act on high-impact opportunities quickly...",
     image: "/assets/offer-2.svg",
@@ -131,7 +123,6 @@ export const blogPosts: BlogPost[] = [
     title: "Maximizing Profit in the Fields of Agriculture",
     category: "Business",
     date: "2024-01-10",
-    author: "Sasha Whit",
     excerpt:
       "Agriculture leaders are embracing data and supply chain improvements to increase profits and reduce volatility...",
     image: "/assets/hero-img.svg",

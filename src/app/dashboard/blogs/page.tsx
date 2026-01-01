@@ -83,6 +83,24 @@ export default function DashboardBlogsPage() {
     fetchBlogs();
   };
 
+  const handleDelete = async (id: string) => {
+    const confirmed = window.confirm(
+      "Delete this blog? This action cannot be undone."
+    );
+    if (!confirmed) return;
+
+    const supabase = supabaseBrowserClient();
+    const { error } = await supabase.from("blogs").delete().eq("id", id);
+
+    if (error) {
+      toast.error("Unable to delete blog.");
+      return;
+    }
+
+    toast.success("Blog deleted.");
+    fetchBlogs();
+  };
+
   const filteredBlogs =
     activeTab === "all"
       ? blogs
@@ -239,6 +257,12 @@ export default function DashboardBlogsPage() {
                         {blog.status === "published"
                           ? "Move to draft"
                           : "Publish"}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        onClick={() => handleDelete(blog.id)}
+                      >
+                        Delete
                       </Button>
                     </div>
                   </div>

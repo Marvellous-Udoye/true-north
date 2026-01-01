@@ -24,7 +24,6 @@ type BlogPost = {
   title: string;
   excerpt: string | null;
   category: string | null;
-  author: string | null;
   cover_image_url: string | null;
   content: string | null;
   published_at: string | null;
@@ -67,8 +66,7 @@ export function BlogsMainSection({ posts }: BlogsMainSectionProps) {
       const matchesSearch =
         !term ||
         post.title.toLowerCase().includes(term) ||
-        (post.excerpt ?? "").toLowerCase().includes(term) ||
-        (post.author ?? "").toLowerCase().includes(term);
+        (post.excerpt ?? "").toLowerCase().includes(term);
       const postDate = getPostDate(post);
       const matchesDate =
         !dateFilter || (postDate && new Date(postDate) >= dateFilter);
