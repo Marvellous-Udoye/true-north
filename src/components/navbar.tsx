@@ -130,8 +130,13 @@ export function Navbar() {
                   </Link>
                 ))}
               </div>
-              <Button asChild className="w-full" size="lg">
-                <Link href="/contact#contact-form">Book an Appointment</Link>
+              <Button asChild className="w-full">
+                <Link
+                  href="/contact#contact-form"
+                  onClick={() => setOpen(false)}
+                >
+                  Book an Appointment
+                </Link>
               </Button>
             </motion.div>
           </motion.div>

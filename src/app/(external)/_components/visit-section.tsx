@@ -43,14 +43,17 @@ export function VisitSection() {
                   <Mail className="h-4 w-4" />
                 </span>
                 <div>
-                  <p className="text-xs uppercase tracking-[0.14em] text-white/70">
+                  <p className="text-base uppercase tracking-[0.14em] text-white/70">
                     Email
                   </p>
-                  <p className="font-medium">
+                  <p className="font-medium hidden sm:inline-block">
                     truenorthtalentadvisory.global@gmail.com
                   </p>
                 </div>
               </div>
+              <p className="font-medium -mt-4 inline-block sm:hidden">
+                truenorthtalentadvisory.global@gmail.com
+              </p>
             </div>
           </div>
         </div>
