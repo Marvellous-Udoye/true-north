@@ -47,7 +47,7 @@ export function VisitSection() {
                     Email
                   </p>
                   <p className="font-medium">
-                    truenorthtalentadvisory@gmail.com
+                    truenorthtalentadvisory.global@gmail.com
                   </p>
                 </div>
               </div>
