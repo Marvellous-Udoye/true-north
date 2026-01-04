@@ -35,25 +35,22 @@ export function VisitSection() {
                 Contact Us
               </p>
               <p className="text-lg font-semibold">Mon-Fri</p>
-              <p className="text-2xl font-bold">9AM - 4PM UTC</p>
+              <p className="text-2xl font-bold">9AM - 4PM {" "} UTC</p>
             </div>
             <div className="flex flex-wrap gap-6 text-sm text-white/90">
               <div className="flex items-center gap-3">
-                <span className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40">
+                <span className="hidden sm:flex h-10 w-10 items-center justify-center rounded-full border border-white/40">
                   <Mail className="h-4 w-4" />
                 </span>
                 <div>
                   <p className="text-base uppercase tracking-[0.14em] text-white/70">
                     Email
                   </p>
-                  <p className="font-medium hidden sm:inline-block">
+                  <p className="font-medium text-xs sm:text-sm">
                     truenorthtalentadvisory.global@gmail.com
                   </p>
                 </div>
               </div>
-              <p className="font-medium -mt-4 inline-block sm:hidden">
-                truenorthtalentadvisory.global@gmail.com
-              </p>
             </div>
           </div>
         </div>
