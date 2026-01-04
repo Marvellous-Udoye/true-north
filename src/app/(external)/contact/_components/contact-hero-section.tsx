@@ -48,7 +48,7 @@ export function ContactHeroSection() {
                 <p className="text-base font-semibold uppercase tracking-[0.14em] text-primary/70">
                   Email
                 </p>
-                <p className="text-sm text-primary">truenorthtalentadvisory.global@gmail.com</p>
+                <p className="text-xs sm:text-sm text-primary">truenorthtalentadvisory.global@gmail.com</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -59,7 +59,7 @@ export function ContactHeroSection() {
                 <p className="text-base font-semibold uppercase tracking-[0.14em] text-primary/70">
                   Monday - Friday
                 </p>
-                <p className="text-sm text-primary">10AM - 4PM</p>
+                <p className="text-xs sm:text-sm text-primary">9AM - 4PM UTC</p>
               </div>
             </div>
           </div>

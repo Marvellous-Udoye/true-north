@@ -35,7 +35,7 @@ export function VisitSection() {
                 Contact Us
               </p>
               <p className="text-lg font-semibold">Mon-Fri</p>
-              <p className="text-2xl font-bold">10AM - 4PM</p>
+              <p className="text-2xl font-bold">9AM - 4PM UTC</p>
             </div>
             <div className="flex flex-wrap gap-6 text-sm text-white/90">
               <div className="flex items-center gap-3">
