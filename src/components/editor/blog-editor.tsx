@@ -125,8 +125,6 @@ import {
   RichTextBubbleMenuDragHandle,
 } from "reactjs-tiptap-editor/bubble";
 
-import "reactjs-tiptap-editor/style.css";
-
 import { Header, NavBar } from "@/components/editor/editor-header";
 import { Count } from "@/components/editor/extension/Count";
 

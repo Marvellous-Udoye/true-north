@@ -27,6 +27,7 @@ export async function POST(request: Request) {
     }
 
     const timestamp = Math.floor(Date.now() / 1000);
+    // Use 'auto' resource type to handle various file formats (pdf, docx, etc.)
     const signature = crypto
       .createHash("sha1")
       .update(`timestamp=${timestamp}${apiSecret}`)

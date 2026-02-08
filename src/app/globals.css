@@ -188,3 +188,9 @@
 [data-richtext-portal] button:has(svg.lucide-crop) {
   display: none;
 }
+
+[data-richtext-portal]
+  .richtext-flex.richtext-items-center.richtext-gap-\[10px\]
+  > button:nth-child(2) {
+  display: none;
+}

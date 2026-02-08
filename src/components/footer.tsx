@@ -25,7 +25,10 @@ const professionalLinks = [
   { href: "/contact#contact-form", label: "Book a Consultation" },
 ];
 
-const resourceLinks = [{ href: "/contact#faq", label: "FAQs" }];
+const resourceLinks = [
+  { href: "/jobs", label: "Jobs" },
+  { href: "/contact#faq", label: "FAQs" },
+];
 
 const socialLinks = [
   {

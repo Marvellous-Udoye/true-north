@@ -1,13 +1,14 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { FileText, LayoutGrid, Mail, User, Users } from "lucide-react";
+import { Briefcase, FileText, LayoutGrid, Mail, User, Users } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const navItems = [
   { href: "/dashboard", label: "Overview", icon: LayoutGrid },
   { href: "/dashboard/blogs", label: "Blogs", icon: FileText },
+  { href: "/dashboard/jobs", label: "Jobs", icon: Briefcase },
   { href: "/dashboard/contacts", label: "Contacts", icon: Mail },
   { href: "/dashboard/subscribers", label: "Subscribers", icon: Users },
   { href: "/dashboard/profile", label: "Profile", icon: User },
