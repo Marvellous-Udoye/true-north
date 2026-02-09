@@ -11,7 +11,6 @@ const galleryImages = [
   "/assets/about-2.svg",
   "/assets/about-3.svg",
   "/assets/about-4.svg",
-  "/assets/about-5.svg",
 ];
 
 export function AboutHeroSection() {
@@ -80,7 +79,7 @@ export function AboutHeroSection() {
       </div>
 
       <div className="mx-auto max-w-7xl px-4 md:px-10 lg:px-14 pt-20">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
           {galleryImages.map((src, index) => (
             <motion.div
               key={src}

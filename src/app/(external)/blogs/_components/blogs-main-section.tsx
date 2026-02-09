@@ -117,7 +117,7 @@ export function BlogsMainSection({ posts }: BlogsMainSectionProps) {
       className="relative overflow-hidden bg-white py-20 lg:py-32"
     >
       <div className="relative mx-auto max-w-7xl px-4 md:px-10 lg:px-14">
-        <div className="mb-16 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+        <div className="mb-10 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <div className="space-y-4 max-w-xl ">
             <div className="inline-flex items-center gap-2 text-primary font-bold uppercase tracking-widest text-xs">
               <div className="h-px w-8 bg-primary" />

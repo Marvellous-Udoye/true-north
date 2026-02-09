@@ -11,6 +11,7 @@ const shortcutLinks = [
   { href: "/about", label: "About Us" },
   { href: "/#services", label: "Services" },
   { href: "/contact", label: "Contact" },
+  { href: "/jobs", label: "Careers" },
 ];
 
 const companyLinks = [
@@ -45,12 +46,13 @@ export function Footer() {
             <div className="grid gap-12 lg:grid-cols-2">
               <div className="space-y-6">
                 <Link href="/" className="flex items-center gap-3">
-                  <div className="relative size-10 overflow-hidden rounded-xl border border-slate-100 bg-slate-50 transition-transform group-hover:scale-95">
+                  <div className="relative overflow-hidden rounded-xl ">
                     <Image
                       src="/logo.jpeg"
                       alt="TrueNorth logo"
-                      fill
-                      className="object-cover"
+                      width={100}
+                      height={80}
+                      className="h-14 object-cover"
                     />
                   </div>
                   <span className="text-2xl font-black tracking-tight text-white uppercase">
@@ -79,7 +81,7 @@ export function Footer() {
                     Stay ahead of the curve.
                   </h3>
                   <p className="text-white/40 text-sm font-medium">
-                    Join 5,000+ leaders receiving our weekly talent advisory
+                    Join leaders receiving our weekly talent advisory
                     insights.
                   </p>
                 </div>

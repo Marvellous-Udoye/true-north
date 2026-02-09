@@ -12,7 +12,7 @@ export function HeroSection() {
       id="hero"
       className="relative overflow-hidden bg-white pt-10 pb-20 lg:pt-20 lg:pb-32 scroll-mt-20"
     >
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-slate-50 -skew-x-12 translate-x-1/3 pointer-events-none border border-primary/5" />
+      <div className="absolute top-0 right-0 w-1/2 h-full bg-slate-50 -skew-x-12 translate-x-1/2 sm:translate-x-1/3 pointer-events-none border border-primary/5" />
       <div className="absolute top-10 left-10 w-24 h-24 border border-primary/5 rounded-full pointer-events-none" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 md:px-10 lg:px-14">

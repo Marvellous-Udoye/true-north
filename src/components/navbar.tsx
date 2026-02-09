@@ -10,9 +10,9 @@ import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 
 const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About Us" },
   { href: "/#services", label: "Services" },
+  { href: "/about", label: "About Us" },
+  { href: "/jobs", label: "Careers" },
   { href: "/blogs", label: "Blogs" },
   { href: "/contact", label: "Contact" },
 ];
@@ -39,21 +39,20 @@ export function Navbar() {
         variants={navVariants}
         initial="initial"
         animate="animate"
-        className="sticky top-0 z-40 w-full border-b border-slate-100 bg-white/80 backdrop-blur-md shadow-none"
+        className="sticky top-0 z-40 w-full border-b border-slate-100 bg-white backdrop-blur-md shadow-none"
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-10 lg:px-14">
-          <Link href="/" className="group flex items-center gap-3">
-            <div className="relative size-10 overflow-hidden rounded-xl border border-slate-100 bg-slate-50 transition-transform group-hover:scale-95">
-              <Image
-                src="/logo.jpeg"
-                alt="TrueNorth logo"
-                fill
-                className="object-cover"
-              />
-            </div>
-            <span className="text-xl font-black tracking-tighter text-slate-900 uppercase">
-              TrueNorth
-            </span>
+          <Link
+            href="/"
+            className="flex items-center gap-2 text-base font-semibold text-primary rounded-xl"
+          >
+            <Image
+              src="/logo.jpeg"
+              alt="TrueNorth logo"
+              width={120}
+              height={64}
+              className="h-12 sm:h-16 object-cover"
+            />
           </Link>
 
           <nav className="hidden items-center gap-2 lg:flex">
@@ -125,14 +124,13 @@ export function Navbar() {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between mb-12">
-                <div className="flex items-center gap-3">
-                  <div className="size-8 rounded-lg bg-primary flex items-center justify-center text-white font-black text-sm">
-                    T
-                  </div>
-                  <span className="font-black tracking-tight text-slate-900 uppercase text-lg">
-                    TrueNorth
-                  </span>
-                </div>
+                <Image
+                  src="/logo.jpeg"
+                  alt="TrueNorth logo"
+                  width={100}
+                  height={80}
+                  className="h-8 sm:h-10 object-cover"
+                />
                 <button
                   type="button"
                   className="size-8 rounded-full flex items-center justify-center bg-slate-50 text-slate-400 hover:text-slate-900"
@@ -144,9 +142,6 @@ export function Navbar() {
               </div>
 
               <div className="flex flex-1 flex-col gap-2">
-                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-300 mb-2">
-                  Navigation
-                </p>
                 {navLinks.map((link) => (
                   <Link
                     key={link.href}

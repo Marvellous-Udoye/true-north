@@ -4,14 +4,14 @@ import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { 
-  Upload, 
-  CheckCircle2, 
-  Send, 
-  Globe, 
-  Mail, 
+import {
+  Upload,
+  CheckCircle2,
+  Send,
+  Globe,
+  Mail,
   Phone,
-  User
+  User,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -89,7 +89,7 @@ export function JobApplyForm({ jobId, jobTitle }: JobApplyFormProps) {
       setErrorMessage(
         error instanceof Error
           ? error.message
-          : "Unable to submit application."
+          : "Unable to submit application.",
       );
     } finally {
       setIsSubmitting(false);
@@ -98,7 +98,7 @@ export function JobApplyForm({ jobId, jobTitle }: JobApplyFormProps) {
 
   if (submitted) {
     return (
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         className="rounded-[2.5rem] bg-white p-6 md:p-10 text-center border border-slate-100"
@@ -108,17 +108,21 @@ export function JobApplyForm({ jobId, jobTitle }: JobApplyFormProps) {
         </div>
         <h3 className="text-2xl font-bold text-slate-900">Application Sent!</h3>
         <p className="mt-3 text-slate-500 leading-relaxed">
-          Thank you for applying for the <span className="font-bold text-slate-900">{jobTitle}</span> role. 
-          Our recruitment team will review your profile and reach out if there&apos;s a match.
+          Thank you for applying for the{" "}
+          <span className="font-bold text-slate-900">{jobTitle}</span> role. Our
+          recruitment team will review your profile and reach out if
+          there&apos;s a match.
         </p>
       </motion.div>
     );
   }
 
   return (
-    <div className="rounded-[2.5rem] bg-white p-6 md:p-8 shadow-sm border border-slate-100 lg:p-10">
+    <div className="rounded-[2rem] bg-white p-6 md:p-8 border border-slate-100 lg:p-10">
       <div className="space-y-2 mb-8">
-        <h3 className="text-2xl font-bold text-slate-900">Apply for this role</h3>
+        <h3 className="text-2xl font-bold text-slate-900">
+          Apply for this role
+        </h3>
         <p className="text-sm text-slate-500 leading-relaxed">
           Submit your details below. We review every application thoughtfully.
         </p>
@@ -127,7 +131,12 @@ export function JobApplyForm({ jobId, jobTitle }: JobApplyFormProps) {
       <form className="grid gap-6" onSubmit={handleSubmit}>
         <div className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
-            <Label htmlFor="firstName" className="text-xs font-bold uppercase tracking-wider text-slate-400">First Name</Label>
+            <Label
+              htmlFor="firstName"
+              className="text-xs font-bold uppercase tracking-wider text-slate-400"
+            >
+              First Name
+            </Label>
             <div className="relative">
               <User className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-slate-300" />
               <Input
@@ -141,7 +150,12 @@ export function JobApplyForm({ jobId, jobTitle }: JobApplyFormProps) {
             </div>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="lastName" className="text-xs font-bold uppercase tracking-wider text-slate-400">Last Name</Label>
+            <Label
+              htmlFor="lastName"
+              className="text-xs font-bold uppercase tracking-wider text-slate-400"
+            >
+              Last Name
+            </Label>
             <Input
               id="lastName"
               value={form.lastName}
@@ -155,7 +169,12 @@ export function JobApplyForm({ jobId, jobTitle }: JobApplyFormProps) {
 
         <div className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2">
-            <Label htmlFor="email" className="text-xs font-bold uppercase tracking-wider text-slate-400">Email Address</Label>
+            <Label
+              htmlFor="email"
+              className="text-xs font-bold uppercase tracking-wider text-slate-400"
+            >
+              Email Address
+            </Label>
             <div className="relative">
               <Mail className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-slate-300" />
               <Input
@@ -170,7 +189,12 @@ export function JobApplyForm({ jobId, jobTitle }: JobApplyFormProps) {
             </div>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="phone" className="text-xs font-bold uppercase tracking-wider text-slate-400">Phone Number</Label>
+            <Label
+              htmlFor="phone"
+              className="text-xs font-bold uppercase tracking-wider text-slate-400"
+            >
+              Phone Number
+            </Label>
             <div className="relative">
               <Phone className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-slate-300" />
               <Input
@@ -187,7 +211,12 @@ export function JobApplyForm({ jobId, jobTitle }: JobApplyFormProps) {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="country" className="text-xs font-bold uppercase tracking-wider text-slate-400">Country of Residence</Label>
+          <Label
+            htmlFor="country"
+            className="text-xs font-bold uppercase tracking-wider text-slate-400"
+          >
+            Country of Residence
+          </Label>
           <div className="relative">
             <Globe className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-slate-300" />
             <Input
@@ -202,7 +231,9 @@ export function JobApplyForm({ jobId, jobTitle }: JobApplyFormProps) {
         </div>
 
         <div className="space-y-2">
-          <Label className="text-xs font-bold uppercase tracking-wider text-slate-400">Resume / CV (PDF)</Label>
+          <Label className="text-xs font-bold uppercase tracking-wider text-slate-400">
+            Resume / CV (PDF)
+          </Label>
           <div className="relative">
             <input
               type="file"
@@ -215,23 +246,33 @@ export function JobApplyForm({ jobId, jobTitle }: JobApplyFormProps) {
               htmlFor="resume-file"
               className={cn(
                 "flex cursor-pointer items-center gap-4 rounded-xl border-2 border-dashed p-4 transition-all duration-200",
-                resumeFile 
-                  ? "border-green-200 bg-green-50/30" 
-                  : "border-slate-100 bg-slate-50/50 hover:border-primary/20 hover:bg-slate-50"
+                resumeFile
+                  ? "border-green-200 bg-green-50/30"
+                  : "border-slate-100 bg-slate-50/50 hover:border-primary/20 hover:bg-slate-50",
               )}
             >
-              <div className={cn(
-                "flex size-10 items-center justify-center rounded-lg",
-                resumeFile ? "bg-green-500 text-white" : "bg-white text-slate-400"
-              )}>
-                {resumeFile ? <CheckCircle2 className="size-5" /> : <Upload className="size-5" />}
+              <div
+                className={cn(
+                  "flex size-10 items-center justify-center rounded-lg",
+                  resumeFile
+                    ? "bg-green-500 text-white"
+                    : "bg-white text-slate-400",
+                )}
+              >
+                {resumeFile ? (
+                  <CheckCircle2 className="size-5" />
+                ) : (
+                  <Upload className="size-5" />
+                )}
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-bold text-slate-900 truncate">
                   {resumeFile ? resumeFile.name : "Choose file or drag here"}
                 </p>
                 <p className="text-xs text-slate-400">
-                  {resumeFile ? `${(resumeFile.size / 1024 / 1024).toFixed(2)} MB` : "PDF or Word up to 10MB"}
+                  {resumeFile
+                    ? `${(resumeFile.size / 1024 / 1024).toFixed(2)} MB`
+                    : "PDF or Word up to 10MB"}
                 </p>
               </div>
             </label>
@@ -239,7 +280,12 @@ export function JobApplyForm({ jobId, jobTitle }: JobApplyFormProps) {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="coverLetter" className="text-xs font-bold uppercase tracking-wider text-slate-400">Cover Letter (Optional)</Label>
+          <Label
+            htmlFor="coverLetter"
+            className="text-xs font-bold uppercase tracking-wider text-slate-400"
+          >
+            Cover Letter (Optional)
+          </Label>
           <textarea
             id="coverLetter"
             value={form.coverLetter}
@@ -267,7 +313,7 @@ export function JobApplyForm({ jobId, jobTitle }: JobApplyFormProps) {
               </div>
             )}
           </Button>
-          
+
           {errorMessage && (
             <p className="mt-4 text-center text-sm font-medium text-red-500 bg-red-50 p-3 rounded-lg border border-red-100">
               {errorMessage}

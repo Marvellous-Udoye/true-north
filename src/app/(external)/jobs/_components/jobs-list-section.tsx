@@ -45,7 +45,7 @@ export function JobsListSection() {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-  const [activeCategory, setActiveCategory] = useState("All");
+  const [activeCategory, setActiveCategory] = useState("All roles");
   const [page, setPage] = useState(1);
 
   useEffect(() => {
@@ -68,20 +68,27 @@ export function JobsListSection() {
     fetchJobs();
   }, []);
 
-  // const categories = useMemo(() => {
-  //   return ["All", ...Array.from(new Set(jobs.map(j => j.category).filter(Boolean)))];
-  // }, [jobs]);
+  const categories = useMemo(() => {
+    const uniqueCategories = Array.from(
+      new Set(jobs.map((j) => j.category).filter(Boolean)),
+    );
+    return ["All roles", ...uniqueCategories];
+  }, [jobs]);
 
   const filteredJobs = useMemo(() => {
     const term = searchTerm.toLowerCase().trim();
+    const normalizedFilter = activeCategory.toLowerCase();
+
     return jobs.filter((job) => {
+      const matchesFilter =
+        normalizedFilter === "all roles" ||
+        (job.category ?? "").toLowerCase() === normalizedFilter;
       const matchesSearch =
         job.title.toLowerCase().includes(term) ||
         (job.location ?? "").toLowerCase().includes(term) ||
         (job.category ?? "").toLowerCase().includes(term);
-      const matchesCategory =
-        activeCategory === "All" || job.category === activeCategory;
-      return matchesSearch && matchesCategory;
+
+      return matchesFilter && matchesSearch;
     });
   }, [searchTerm, activeCategory, jobs]);
 
@@ -128,9 +135,9 @@ export function JobsListSection() {
               Current Openings
             </div>
             <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
-              Join Our{" "}
-              <span className="text-primary italic font-serif">Talent</span>{" "}
-              Network
+              Our{" "}
+              <span className="text-primary italic font-serif">Strategic</span>{" "}
+              Roles
             </h2>
             <p className="text-lg text-slate-500 font-medium leading-relaxed">
               Explore curated opportunities at leading organizations where you
@@ -142,7 +149,7 @@ export function JobsListSection() {
             <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
             <Input
               type="text"
-              placeholder="Search by role, category or location..."
+              placeholder="Search roles or locations..."
               value={searchTerm}
               onChange={(e) => {
                 setSearchTerm(e.target.value);
@@ -153,29 +160,32 @@ export function JobsListSection() {
           </div>
         </div>
 
-        {/* <div className="mb-10 flex flex-nowrap overflow-x-auto pb-4 gap-3 no-scrollbar">
-          {categories.map((cat) => (
+        <div className="mb-8 flex flex-nowrap overflow-x-auto pb-4 gap-3 no-scrollbar">
+          {categories.map((filter) => (
             <button
-              key={cat}
-              onClick={() => { setActiveCategory(cat); setPage(1); }}
+              key={filter}
+              onClick={() => {
+                setActiveCategory(filter);
+                setPage(1);
+              }}
               className={cn(
-                "px-6 py-2.5 rounded-full text-sm font-bold whitespace-nowrap border transition-all duration-300 cursor-pointer",
-                cat === activeCategory
+                "px-6 py-2.5 rounded-full text-sm font-bold whitespace-nowrap border transition-all duration-300 cursor-pointer shadow-none",
+                filter === activeCategory
                   ? "bg-primary text-white border-primary"
-                  : "bg-white text-slate-500 border-slate-200 hover:border-primary/30 hover:text-primary"
+                  : "bg-white text-slate-500 border-slate-200 hover:border-primary/30 hover:text-primary",
               )}
             >
-              {cat}
+              {filter}
             </button>
           ))}
-        </div> */}
+        </div>
 
         <div className="grid gap-6">
           {loading ? (
             Array.from({ length: 4 }).map((_, i) => (
               <div
                 key={i}
-                className="rounded-[2.5rem] border border-slate-100 bg-white p-8 space-y-4"
+                className="rounded-[2.5rem] border border-slate-100 bg-slate-50/30 p-8 space-y-4"
               >
                 <Skeleton className="h-8 w-1/3 rounded-lg" />
                 <Skeleton className="h-4 w-1/4 rounded-lg" />
@@ -191,14 +201,14 @@ export function JobsListSection() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.4, delay: index * 0.05 }}
-                  className="group relative overflow-hidden rounded-[2.5rem] border border-slate-200 bg-white p-6 transition-all duration-500 hover:border-primary/30 md:p-8"
+                  className="group relative overflow-hidden rounded-[2.5rem] border border-slate-200 bg-white p-6 transition-all duration-500 hover:border-primary/40 md:p-10 shadow-none"
                 >
-                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
-                    <div className="flex-1 space-y-4">
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-10">
+                    <div className="flex-1 space-y-6">
                       <div className="flex flex-wrap items-center gap-3">
                         <Badge
                           variant="secondary"
-                          className="bg-primary/5 text-primary border-none font-bold uppercase text-[10px] tracking-widest px-3 py-1.5"
+                          className="bg-primary/5 text-primary border-none font-bold uppercase text-[10px] tracking-widest px-3 py-1.5 rounded-md"
                         >
                           {job.category}
                         </Badge>
@@ -207,33 +217,40 @@ export function JobsListSection() {
                           <Clock className="size-3" />
                           {new Date(
                             job.published_at || job.created_at,
-                          ).toLocaleDateString()}
+                          ).toLocaleDateString("en-US", {
+                            month: "short",
+                            day: "numeric",
+                            year: "numeric",
+                          })}
                         </div>
                       </div>
 
-                      <div>
-                        <h3 className="text-2xl font-extrabold text-slate-900 group-hover:text-primary transition-colors tracking-tight">
+                      <div className="space-y-3">
+                        <h3 className="text-3xl md:text-4xl font-extrabold text-slate-900 group-hover:text-primary transition-colors tracking-tighter leading-none">
                           {job.title}
                         </h3>
-                        <div className="mt-3 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-bold text-slate-500">
-                          <div className="flex items-center gap-1.5">
-                            <MapPin className="size-4 text-primary" />
+                        <div className="flex flex-wrap items-center gap-x-8 gap-y-2 text-sm font-bold text-slate-500">
+                          <div className="flex items-center gap-2">
+                            <div className="size-8 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center border border-orange-100/50">
+                              <MapPin className="size-4" />
+                            </div>
                             {job.location}
                           </div>
-                          <div className="flex items-center gap-1.5">
-                            <Briefcase className="size-4 text-primary" />
-                            {job.type}{" "}
-                            {job.work_mode ? `· ${job.work_mode}` : ""}
+                          <div className="flex items-center gap-2">
+                            <div className="size-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100/50">
+                              <Briefcase className="size-4" />
+                            </div>
+                            {job.type}
+                            {job.work_mode ? ` · ${job.work_mode}` : ""}
                           </div>
                         </div>
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-3 shrink-0">
+                    <div className="flex items-center gap-4 shrink-0">
                       <Button
                         asChild
-                        variant="outline"
-                        className="h-12 px-8 rounded-2xl bg-primary text-white font-bold hover:bg-primary/90 transition-all group shadow-none"
+                        className="h-14 px-10 rounded-2xl bg-primary text-white font-black uppercase text-xs tracking-widest hover:bg-primary/90 transition-all group shadow-none border-none"
                       >
                         <Link href={`/jobs/${job.slug}`}>
                           Apply
@@ -259,7 +276,7 @@ export function JobsListSection() {
                 variant="link"
                 onClick={() => {
                   setSearchTerm("");
-                  setActiveCategory("All");
+                  setActiveCategory("All roles");
                   setPage(1);
                 }}
                 className="mt-6 text-primary font-black uppercase text-xs tracking-[0.2em]"
@@ -270,6 +287,7 @@ export function JobsListSection() {
           )}
         </div>
 
+        {/* Pagination - Aligned with Blogs UI */}
         {totalPages > 1 && (
           <div className="mt-20 flex justify-center">
             <Pagination className="bg-white p-2 rounded-full border border-slate-200 shadow-none">
@@ -280,7 +298,7 @@ export function JobsListSection() {
                       handlePageChange(Math.max(1, currentPage - 1))
                     }
                     disabled={currentPage === 1}
-                    className="rounded-full h-10 w-10 border-none hover:bg-slate-50"
+                    className="rounded-full h-10 w-10 border-none hover:bg-slate-50 cursor-pointer"
                   >
                     <ChevronLeft className="h-4 w-4" />
                   </PaginationButton>
@@ -294,7 +312,7 @@ export function JobsListSection() {
                         isActive={p === currentPage}
                         onClick={() => handlePageChange(p as number)}
                         className={cn(
-                          "rounded-full h-10 w-10 border-none transition-all font-bold text-sm",
+                          "rounded-full h-10 w-10 border-none transition-all font-bold text-sm cursor-pointer",
                           p === currentPage
                             ? "bg-primary text-white"
                             : "hover:bg-slate-50",
@@ -311,7 +329,7 @@ export function JobsListSection() {
                       handlePageChange(Math.min(totalPages, currentPage + 1))
                     }
                     disabled={currentPage === totalPages}
-                    className="rounded-full h-10 w-10 border-none hover:bg-slate-50"
+                    className="rounded-full h-10 w-10 border-none hover:bg-slate-50 cursor-pointer"
                   >
                     <ChevronRight className="h-4 w-4" />
                   </PaginationButton>

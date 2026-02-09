@@ -57,11 +57,11 @@ export function ContactHeroSection() {
                 <Mail className="size-5" />
               </div>
               <div>
-                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">
+                <p className="text-sm font-black uppercase tracking-widest text-slate-400">
                   Email Address
                 </p>
                 <Link href="mailto:truenorthtalentadvisory.global@gmail.com">
-                  <p className="text-sm font-bold text-slate-900">
+                  <p className="text-xs sm:text-sm font-bold text-slate-900">
                     truenorthtalentadvisory.global@gmail.com
                   </p>
                 </Link>
@@ -72,7 +72,7 @@ export function ContactHeroSection() {
                 <Clock className="size-5" />
               </div>
               <div>
-                <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">
+                <p className="text-sm font-black uppercase tracking-widest text-slate-400">
                   Monday - Friday
                 </p>
                 <p className="text-sm font-bold text-slate-900">
