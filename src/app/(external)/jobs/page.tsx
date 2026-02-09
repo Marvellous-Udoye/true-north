@@ -1,3 +1,4 @@
+import { JobsHeroSection } from "./_components/jobs-hero-section";
 import { JobsListSection } from "./_components/jobs-list-section";
 
 export const metadata = {
@@ -8,6 +9,7 @@ export const metadata = {
 export default function JobsPage() {
   return (
     <main>
+      <JobsHeroSection />
       <JobsListSection />
     </main>
   );

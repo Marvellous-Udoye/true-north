@@ -1,14 +1,30 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { Search, MapPin, Briefcase, Clock, ChevronRight } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Pagination,
+  PaginationButton,
+  PaginationContent,
+  PaginationItem,
+} from "@/components/ui/pagination";
 import { Skeleton } from "@/components/ui/skeleton";
 import { supabaseBrowserClient } from "@/lib/supabase/client";
+import { cn } from "@/lib/utils";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  ArrowRight,
+  Briefcase,
+  ChevronLeft,
+  ChevronRight,
+  Clock,
+  Layers,
+  MapPin,
+  Search,
+} from "lucide-react";
 import Link from "next/link";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 type Job = {
   id: string;
@@ -22,10 +38,15 @@ type Job = {
   created_at: string;
 };
 
+const pageSize = 6;
+
 export function JobsListSection() {
+  const sectionRef = useRef<HTMLElement | null>(null);
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -33,7 +54,7 @@ export function JobsListSection() {
       const { data, error } = await supabase
         .from("jobs")
         .select(
-          "id, title, slug, location, type, work_mode, category, published_at, created_at"
+          "id, title, slug, location, type, work_mode, category, published_at, created_at",
         )
         .eq("status", "published")
         .order("published_at", { ascending: false });
@@ -47,124 +68,258 @@ export function JobsListSection() {
     fetchJobs();
   }, []);
 
-  const filteredJobs = jobs.filter((job) =>
-    job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (job.category ?? "").toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (job.location ?? "").toLowerCase().includes(searchTerm.toLowerCase())
+  // const categories = useMemo(() => {
+  //   return ["All", ...Array.from(new Set(jobs.map(j => j.category).filter(Boolean)))];
+  // }, [jobs]);
+
+  const filteredJobs = useMemo(() => {
+    const term = searchTerm.toLowerCase().trim();
+    return jobs.filter((job) => {
+      const matchesSearch =
+        job.title.toLowerCase().includes(term) ||
+        (job.location ?? "").toLowerCase().includes(term) ||
+        (job.category ?? "").toLowerCase().includes(term);
+      const matchesCategory =
+        activeCategory === "All" || job.category === activeCategory;
+      return matchesSearch && matchesCategory;
+    });
+  }, [searchTerm, activeCategory, jobs]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredJobs.length / pageSize));
+  const currentPage = Math.min(page, totalPages);
+  const pagedJobs = filteredJobs.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize,
   );
 
+  const handlePageChange = (nextPage: number) => {
+    setPage(nextPage);
+    sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const pages = useMemo(() => {
+    if (totalPages <= 5)
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
+    if (currentPage <= 3) return [1, 2, 3, "...", totalPages];
+    if (currentPage >= totalPages - 2)
+      return [1, "...", totalPages - 2, totalPages - 1, totalPages];
+    return [
+      1,
+      "...",
+      currentPage - 1,
+      currentPage,
+      currentPage + 1,
+      "...",
+      totalPages,
+    ];
+  }, [currentPage, totalPages]);
+
   return (
-    <section className="bg-slate-50 py-16 md:py-24">
-      <div className="mx-auto max-w-7xl px-4 md:px-10 lg:px-14">
-        <div className="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <div className="max-w-xl space-y-4">
-            <h2 className="text-3xl font-bold text-primary">Open Positions</h2>
-            <p className="text-muted-foreground">
-              Browse our current openings and find the perfect match for your
-              skills and aspirations.
+    <section
+      ref={sectionRef}
+      id="jobs"
+      className="relative overflow-hidden bg-slate-50 py-20 lg:py-32"
+    >
+      <div className="relative mx-auto max-w-7xl px-4 md:px-10 lg:px-14">
+        <div className="mb-16 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+          <div className="space-y-4 max-w-xl">
+            <div className="inline-flex items-center gap-2 text-primary font-bold uppercase tracking-widest text-xs">
+              <div className="h-px w-8 bg-primary" />
+              Current Openings
+            </div>
+            <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+              Join Our{" "}
+              <span className="text-primary italic font-serif">Talent</span>{" "}
+              Network
+            </h2>
+            <p className="text-lg text-slate-500 font-medium leading-relaxed">
+              Explore curated opportunities at leading organizations where you
+              can make a meaningful impact.
             </p>
           </div>
-          <div className="relative w-full max-w-sm">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+
+          <div className="relative w-full max-w-md mx-auto lg:mx-0">
+            <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
             <Input
               type="text"
-              placeholder="Search jobs..."
-              className="h-10 w-full bg-white pl-10"
+              placeholder="Search by role, category or location..."
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+                setPage(1);
+              }}
+              className="h-12 w-full rounded-2xl border-none bg-white pl-11 shadow-none ring-1 ring-slate-200 focus:ring-2 focus:ring-primary/20 transition-all"
             />
           </div>
         </div>
 
-        <div className="grid gap-4">
+        {/* <div className="mb-10 flex flex-nowrap overflow-x-auto pb-4 gap-3 no-scrollbar">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => { setActiveCategory(cat); setPage(1); }}
+              className={cn(
+                "px-6 py-2.5 rounded-full text-sm font-bold whitespace-nowrap border transition-all duration-300 cursor-pointer",
+                cat === activeCategory
+                  ? "bg-primary text-white border-primary"
+                  : "bg-white text-slate-500 border-slate-200 hover:border-primary/30 hover:text-primary"
+              )}
+            >
+              {cat}
+            </button>
+          ))}
+        </div> */}
+
+        <div className="grid gap-6">
           {loading ? (
-            Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="rounded-xl border border-white bg-white p-6 shadow-sm">
-                <Skeleton className="h-6 w-1/3 mb-4" />
-                <Skeleton className="h-4 w-1/4 mb-2" />
-                <Skeleton className="h-4 w-1/2" />
+            Array.from({ length: 4 }).map((_, i) => (
+              <div
+                key={i}
+                className="rounded-[2.5rem] border border-slate-100 bg-white p-8 space-y-4"
+              >
+                <Skeleton className="h-8 w-1/3 rounded-lg" />
+                <Skeleton className="h-4 w-1/4 rounded-lg" />
               </div>
             ))
-          ) : filteredJobs.length > 0 ? (
-            filteredJobs.map((job, index) => {
-              const postDate = job.published_at || job.created_at;
-              const dateLabel = new Date(postDate).toLocaleDateString();
-
-              return (
+          ) : pagedJobs.length > 0 ? (
+            <AnimatePresence mode="popLayout">
+              {pagedJobs.map((job, index) => (
                 <motion.div
                   key={job.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
-                  className="group relative flex flex-col justify-between gap-4 rounded-xl border border-white bg-white p-6 shadow-sm transition-all hover:shadow-md md:flex-row md:items-center"
+                  layout
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.4, delay: index * 0.05 }}
+                  className="group relative overflow-hidden rounded-[2.5rem] border border-slate-200 bg-white p-6 transition-all duration-500 hover:border-primary/30 md:p-8"
                 >
-                  <div className="space-y-3">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <Badge variant="secondary" className="bg-primary/5 text-primary border-none">
-                        {job.category}
-                      </Badge>
-                      <span className="flex items-center text-xs text-muted-foreground">
-                        <Clock className="mr-1 h-3 w-3" /> {dateLabel}
-                      </span>
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+                    <div className="flex-1 space-y-4">
+                      <div className="flex flex-wrap items-center gap-3">
+                        <Badge
+                          variant="secondary"
+                          className="bg-primary/5 text-primary border-none font-bold uppercase text-[10px] tracking-widest px-3 py-1.5"
+                        >
+                          {job.category}
+                        </Badge>
+                        <div className="size-1 rounded-full bg-slate-200" />
+                        <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                          <Clock className="size-3" />
+                          {new Date(
+                            job.published_at || job.created_at,
+                          ).toLocaleDateString()}
+                        </div>
+                      </div>
+
+                      <div>
+                        <h3 className="text-2xl font-extrabold text-slate-900 group-hover:text-primary transition-colors tracking-tight">
+                          {job.title}
+                        </h3>
+                        <div className="mt-3 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-bold text-slate-500">
+                          <div className="flex items-center gap-1.5">
+                            <MapPin className="size-4 text-primary" />
+                            {job.location}
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <Briefcase className="size-4 text-primary" />
+                            {job.type}{" "}
+                            {job.work_mode ? `· ${job.work_mode}` : ""}
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <h3 className="text-xl font-bold text-primary group-hover:text-[#EE4312] transition-colors">
-                      {job.title}
-                    </h3>
-                    <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-                      <span className="flex items-center">
-                        <MapPin className="mr-1.5 h-4 w-4 text-[#EE4312]" />
-                        {job.location}
-                      </span>
-                      <span className="flex items-center">
-                        <Briefcase className="mr-1.5 h-4 w-4 text-[#EE4312]" />
-                        {job.type}
-                        {job.work_mode ? ` · ${job.work_mode}` : ""}
-                      </span>
+
+                    <div className="flex items-center gap-3 shrink-0">
+                      <Button
+                        asChild
+                        variant="outline"
+                        className="h-12 px-8 rounded-2xl bg-primary text-white font-bold hover:bg-primary/90 transition-all group shadow-none"
+                      >
+                        <Link href={`/jobs/${job.slug}`}>
+                          Apply
+                          <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
+                        </Link>
+                      </Button>
                     </div>
                   </div>
-                  <Button
-                    asChild
-                    className="bg-[#EE4312] text-white hover:bg-[#cf3a10] md:w-auto"
-                  >
-                    <Link href={`/jobs/${job.slug}`}>
-                      View Details <ChevronRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
                 </motion.div>
-              );
-            })
+              ))}
+            </AnimatePresence>
           ) : (
-            <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-muted-foreground/20 py-20 text-center">
-              <p className="text-lg font-medium text-muted-foreground">
-                No jobs found matching your search.
+            <div className="flex flex-col items-center justify-center py-32 text-center bg-white rounded-[3rem] border-2 border-dashed border-slate-200">
+              <Layers className="size-12 text-slate-300 mb-6" />
+              <h3 className="text-2xl font-black text-slate-900 uppercase">
+                No roles found
+              </h3>
+              <p className="text-slate-500 font-medium max-w-sm mt-2">
+                Adjust your keywords or select a different category to see all
+                roles.
               </p>
               <Button
                 variant="link"
-                className="mt-2 text-primary"
-                onClick={() => setSearchTerm("")}
+                onClick={() => {
+                  setSearchTerm("");
+                  setActiveCategory("All");
+                  setPage(1);
+                }}
+                className="mt-6 text-primary font-black uppercase text-xs tracking-[0.2em]"
               >
-                Clear all filters
+                Clear All filters
               </Button>
             </div>
           )}
         </div>
 
-        <div className="mt-16 rounded-2xl bg-[#0f1f4a] p-8 text-center text-white md:p-12">
-          <h2 className="mb-4 text-2xl font-bold md:text-3xl">
-            Don&apos;t see a perfect fit?
-          </h2>
-          <p className="mx-auto mb-8 max-w-2xl text-white/70">
-            Submit your resume to our talent pool, and we&apos;ll notify you when
-            an opportunity that matches your profile opens up.
-          </p>
-          <Button
-            asChild
-            className="bg-white text-[#0f1f4a] hover:bg-white/90"
-          >
-            <Link href="/contact">Join Our Talent Pool</Link>
-          </Button>
-        </div>
+        {totalPages > 1 && (
+          <div className="mt-20 flex justify-center">
+            <Pagination className="bg-white p-2 rounded-full border border-slate-200 shadow-none">
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationButton
+                    onClick={() =>
+                      handlePageChange(Math.max(1, currentPage - 1))
+                    }
+                    disabled={currentPage === 1}
+                    className="rounded-full h-10 w-10 border-none hover:bg-slate-50"
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                  </PaginationButton>
+                </PaginationItem>
+                {pages.map((p, i) => (
+                  <PaginationItem key={i}>
+                    {p === "..." ? (
+                      <span className="px-2">...</span>
+                    ) : (
+                      <PaginationButton
+                        isActive={p === currentPage}
+                        onClick={() => handlePageChange(p as number)}
+                        className={cn(
+                          "rounded-full h-10 w-10 border-none transition-all font-bold text-sm",
+                          p === currentPage
+                            ? "bg-primary text-white"
+                            : "hover:bg-slate-50",
+                        )}
+                      >
+                        {p}
+                      </PaginationButton>
+                    )}
+                  </PaginationItem>
+                ))}
+                <PaginationItem>
+                  <PaginationButton
+                    onClick={() =>
+                      handlePageChange(Math.min(totalPages, currentPage + 1))
+                    }
+                    disabled={currentPage === totalPages}
+                    className="rounded-full h-10 w-10 border-none hover:bg-slate-50"
+                  >
+                    <ChevronRight className="h-4 w-4" />
+                  </PaginationButton>
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -6,6 +6,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { HelpCircle } from "lucide-react";
+import Link from "next/link";
 
 const faqs = [
   {
@@ -37,47 +39,61 @@ const faqs = [
 
 export function ContactFaqSection() {
   return (
-    <section id="contact-faq" className="bg-white py-16 md:py-20">
-      <div
-        className="pointer-events-none absolute inset-0 max-sm:h-12 max-sm:w-40 opacity-60"
-        style={{
-          backgroundImage: "url('/assets/offer-bg.svg')",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "right top",
-        }}
-        aria-hidden="true"
-      />
-      <div className="mx-auto max-w-7xl px-4 md:px-10 lg:px-14">
-        <div className="space-y-3">
-          <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.16em] text-primary">
-            FAQ
-          </p>
-          <h2 className="text-2xl font-bold text-primary md:text-3xl">
-            Most Asked Question to Us
-          </h2>
-          <p className="max-w-3xl text-base text-muted-foreground">
-            Explore answers to common questions so you can connect with our team
-            confidently.
-          </p>
-        </div>
+    <section
+      id="contact-faq"
+      className="bg-white py-20 lg:py-32 overflow-hidden relative"
+    >
+      <div className="absolute top-0 right-0 w-64 h-64 bg-orange-50 rounded-full blur-3xl opacity-50 -translate-y-1/2 translate-x-1/2 pointer-events-none" />
 
-        <div className="mt-8">
-          <Accordion type="single" collapsible className="w-full space-y-3">
-            {faqs.map((faq) => (
-              <AccordionItem
-                key={faq.question}
-                value={faq.question}
-                className="rounded-xl border border-primary/10 px-4"
-              >
-                <AccordionTrigger className="text-left text-base font-semibold text-primary">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="pb-4 text-sm text-muted-foreground">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+      <div className="mx-auto max-w-7xl px-4 md:px-10 lg:px-14">
+        <div className="flex flex-col lg:flex-row gap-16">
+          <div className="lg:w-1/3 space-y-6">
+            <div className="inline-flex items-center gap-2 text-orange-600 font-bold uppercase tracking-widest text-xs">
+              <HelpCircle className="size-4" />
+              Resources
+            </div>
+            <h2 className="text-4xl font-extrabold text-slate-900 tracking-tight leading-[1.1]">
+              Common{" "}
+              <span className="text-orange-600 italic font-serif">
+                Questions
+              </span>{" "}
+              for Us.
+            </h2>
+            <p className="text-lg text-slate-500 font-medium leading-relaxed">
+              Explore answers to common questions so you can connect with our
+              advisory team with full confidence.
+            </p>
+            <div className="pt-8 border-t border-slate-100">
+              <p className="text-sm font-bold text-slate-900 mb-2">
+                Still have questions?
+              </p>
+              <p className="text-sm text-slate-500">Reach out directly at</p>
+              <Link href="mailto:truenorthtalentadvisory.global@gmail.com">
+                <p className="text-sm font-black text-primary">
+                  truenorthtalentadvisory.global@gmail.com
+                </p>
+              </Link>
+            </div>
+          </div>
+
+          <div className="lg:w-2/3">
+            <Accordion type="single" collapsible className="w-full space-y-4">
+              {faqs.map((faq) => (
+                <AccordionItem
+                  key={faq.question}
+                  value={faq.question}
+                  className="rounded-[2rem] border border-slate-200 px-6 md:px-8 bg-slate-50/30 transition-all hover:border-primary/20"
+                >
+                  <AccordionTrigger className="text-left text-lg font-bold text-slate-900 hover:no-underline py-6">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-8 text-base text-slate-500 font-medium leading-relaxed">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
         </div>
       </div>
     </section>

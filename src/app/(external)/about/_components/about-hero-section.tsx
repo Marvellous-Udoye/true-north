@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { ArrowRight, Star } from "lucide-react";
 
 const galleryImages = [
   "/assets/about-1.svg",
@@ -17,47 +18,58 @@ export function AboutHeroSection() {
   return (
     <section
       id="about-hero"
-      className="relative overflow-hidden bg-white py-16 md:py-20 scroll-mt-20"
+      className="relative overflow-hidden bg-white py-20 lg:py-32 scroll-mt-20"
     >
-      <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 md:px-10 lg:grid-cols-[1.05fr_0.95fr] lg:px-14">
+      <div className="absolute top-0 left-0 w-full h-full bg-slate-50/50 -skew-y-6 origin-top-left pointer-events-none" />
+
+      <div className="relative mx-auto grid max-w-7xl items-center gap-16 px-4 md:px-10 lg:grid-cols-[1.1fr_0.9fr] lg:px-14">
         <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="space-y-5"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="space-y-8"
         >
-          <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.16em] text-primary">
-            About TrueNorth
-          </p>
-          <h1 className="text-3xl font-bold leading-tight text-primary md:text-4xl lg:text-5xl">
-            Clients Success is Our Focus
-          </h1>
-          <p className="max-w-xl text-base text-muted-foreground ">
-            Committed to your success, TrueNorth Talent Advisory delivers
-            strategic recruitment and talent advisory solutions, helping
-            organizations attract, retain, and develop the right talent to drive
-            sustainable growth and long-term business excellence.
-          </p>
-          <Button
-            asChild
-            className="bg-[#EE4312] text-white hover:bg-[#cf3a10]"
-          >
-            <Link href="/contact">Collaborate with Us</Link>
-          </Button>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/5 border border-primary/10 text-primary text-xs font-bold uppercase tracking-widest w-fit">
+            <Star className="size-3 fill-current" />
+            TrueNorth Story
+          </div>
+
+          <div className="space-y-6">
+            <h1 className="text-4xl md:text-6xl font-extrabold leading-[1.1] text-slate-900 tracking-tight">
+              Client Success is Our{" "}
+              <span className="text-primary italic font-serif">Only</span>{" "}
+              Focus.
+            </h1>
+            <p className="max-w-xl text-lg md:text-xl text-slate-500 font-medium leading-relaxed">
+              TrueNorth Talent Advisory delivers strategic recruitment
+              solutions, helping organizations attract and develop high-impact
+              talent to drive long-term excellence.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-4">
+            <Button
+              asChild
+              className="h-14 px-10 rounded-2xl bg-primary text-white text-lg font-bold hover:bg-primary/90 transition-all group"
+            >
+              <Link href="/contact">
+                Collaborate with Us
+                <ArrowRight className="ml-2 size-5 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </Button>
+          </div>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
           className="relative"
         >
-          <div className="relative overflow-hidden">
+          <div className="relative z-10 overflow-hidden shadow-none">
             <Image
               src="/assets/about-bg.svg"
-              alt="TrueNorth consulting team"
+              alt="Team collaboration"
               width={560}
               height={420}
               className="h-auto w-full object-cover"
@@ -67,21 +79,25 @@ export function AboutHeroSection() {
         </motion.div>
       </div>
 
-      <div className="grid grid-cols-5 gap-2 sm:gap-3 pt-6 w-full max-w-6xl px-4 md:px-10 lg:px-0 mx-auto">
-        {galleryImages.map((src) => (
-          <div
-            key={src}
-            className="overflow-hidden rounded-md bg-white shadow-sm"
-          >
-            <Image
-              src={src}
-              alt=""
-              width={120}
-              height={80}
-              className="h-full w-full object-cover"
-            />
-          </div>
-        ))}
+      <div className="mx-auto max-w-7xl px-4 md:px-10 lg:px-14 pt-20">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+          {galleryImages.map((src, index) => (
+            <motion.div
+              key={src}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className="overflow-hidden rounded-2xl border-4 border-white bg-slate-100 aspect-video md:aspect-square relative"
+            >
+              <Image
+                src={src}
+                alt=""
+                fill
+                className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
+              />
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );

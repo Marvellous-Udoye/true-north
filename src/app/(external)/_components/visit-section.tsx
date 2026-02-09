@@ -1,58 +1,91 @@
 "use client";
 
-import { Mail } from "lucide-react";
+import { Mail, Clock, ArrowRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import { motion } from "framer-motion";
 
 export function VisitSection() {
   return (
     <section
       id="visit"
-      className="relative overflow-hidden bg-[#f7f9fc] py-16 md:py-20"
+      className="relative overflow-hidden bg-white py-20 lg:py-32"
     >
-      <div
-        className="pointer-events-none absolute right-0 top-0 lg:top-6 h-12 sm:h-24 lg:h-40 w-56 opacity-70"
-        style={{
-          backgroundImage: "url('/assets/hero-dots.svg')",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "right top",
-        }}
-        aria-hidden="true"
-      />
-      <div className="relative mx-auto flex max-w-7xl flex-col gap-8 px-4 md:px-10 lg:px-14">
-        <div className="overflow-hidden rounded-2xl bg-white shadow-sm md:flex">
-          <div className="md:w-1/2">
+      <div className="relative mx-auto max-w-7xl px-4 md:px-10 lg:px-14">
+        <div className="grid lg:grid-cols-2 gap-8">
+          {/* Left: Image Card - No shadow */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="relative h-[400px] lg:h-full min-h-[400px] overflow-hidden rounded-[2.5rem] border border-slate-100"
+          >
             <Image
               src="/assets/visit.svg"
-              alt="TrueNorth office visit"
-              width={640}
-              height={420}
-              className="h-full w-full object-cover"
+              alt="TrueNorth office"
+              fill
+              className="object-cover"
             />
-          </div>
-          <div className="flex flex-1 flex-col justify-between gap-6 bg-[#EE4312] p-6 text-white md:p-8">
-            <div className="space-y-2">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/80">
-                Contact Us
-              </p>
-              <p className="text-lg font-semibold">Mon-Fri</p>
-              <p className="text-2xl font-bold">9AM - 4PM {" "} UTC</p>
-            </div>
-            <div className="flex flex-wrap gap-6 text-sm text-white/90">
-              <div className="flex items-center gap-3">
-                <span className="hidden sm:flex h-10 w-10 items-center justify-center rounded-full border border-white/40">
-                  <Mail className="h-4 w-4" />
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="flex flex-col justify-between gap-12 rounded-[2.5rem] border border-orange-100 bg-orange-50/50 p-8 md:p-12"
+          >
+            <div className="space-y-6">
+              <div className="flex items-center gap-2 text-orange-600 font-bold uppercase tracking-widest text-xs">
+                <div className="h-px w-8 bg-orange-600" />
+                Contact Information
+              </div>
+
+              <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
+                Let&apos;s Start a{" "}
+                <span className="text-orange-600 italic font-serif">
+                  Conversation
                 </span>
-                <div>
-                  <p className="text-base uppercase tracking-[0.14em] text-white/70">
-                    Email
-                  </p>
-                  <p className="font-medium text-xs sm:text-sm">
-                    truenorthtalentadvisory.global@gmail.com
-                  </p>
+              </h2>
+
+              <div className="grid gap-8 pt-4">
+                <div className="flex items-start gap-4">
+                  <div className="size-12 rounded-2xl bg-white border border-orange-100 flex items-center justify-center shrink-0">
+                    <Mail className="size-6 text-orange-600" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                      Email Address
+                    </p>
+                    <p className="text-sm sm:text-lg font-bold text-slate-900 break-all">
+                      truenorthtalentadvisory.global@gmail.com
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="size-12 rounded-2xl bg-white border border-orange-100 flex items-center justify-center shrink-0">
+                    <Clock className="size-6 text-orange-600" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                      Availability
+                    </p>
+                    <p className="text-sm sm:text-lg font-bold text-slate-900">
+                      Mon - Fri: 9AM - 4PM UTC
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 text-lg font-bold text-slate-900 hover:text-orange-600 transition-colors group"
+            >
+              Book a consultation
+              <ArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </motion.div>
         </div>
       </div>
     </section>

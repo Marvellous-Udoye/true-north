@@ -41,13 +41,17 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="min-h-screen bg-[#f7f9fc] text-primary">
-      <div className="fixed left-0 top-0 hidden h-screen w-64 lg:block">
+    <div className="min-h-screen bg-slate-50/50 text-slate-900 selection:bg-primary/10">
+      <div className="fixed left-0 top-0 hidden h-screen w-72 lg:block">
         <DashboardSidebar />
       </div>
-      <div className="flex min-h-screen flex-col lg:pl-64">
+      <div className="flex min-h-screen flex-col lg:pl-72">
         <DashboardTopbar />
-        <main className="flex-1 px-4 py-6">{children}</main>
+        <main className="flex-1 px-6 py-10 lg:px-10">
+          <div className="mx-auto max-w-7xl">
+            {children}
+          </div>
+        </main>
       </div>
     </div>
   );

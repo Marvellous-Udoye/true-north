@@ -1,66 +1,62 @@
 "use client";
 
-import Image from "next/image";
 import { SubscribeForm } from "@/components/subscribe-form";
 import { motion } from "framer-motion";
+import { Sparkles } from "lucide-react";
+import Image from "next/image";
 
 export function BlogSubscribeSection() {
   return (
     <section
       id="blog-subscribe"
-      className="relative overflow-hidden bg-[#101c44] py-16 text-white md:py-20"
+      className="relative overflow-hidden bg-[#0f1f4a] py-20 lg:py-32 text-white"
     >
-      <div
-        className="pointer-events-none absolute right-0 top-0 h-12 sm:h-20 w-40 opacity-70"
-        style={{
-          backgroundImage: "url('/assets/hero-dots.svg')",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "right top",
-        }}
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute bottom-6 left-10 h-24 w-48 opacity-70"
-        style={{
-          backgroundImage: "url('/assets/offer-bg.svg')",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "left bottom",
-        }}
-        aria-hidden="true"
-      />
-      <div className="relative mx-auto grid max-w-7xl items-center gap-8 px-4 md:px-10 lg:grid-cols-[1.05fr_0.95fr] lg:px-14">
+      <div className="absolute top-0 right-0 w-full h-full opacity-10 pointer-events-none">
+        <div className="absolute top-10 right-10 size-64 border border-white rounded-full" />
+        <div className="absolute bottom-10 left-10 size-40 border border-white rounded-full" />
+      </div>
+
+      <div className="relative mx-auto grid max-w-7xl items-center gap-16 px-4 md:px-10 lg:grid-cols-[1.1fr_0.9fr] lg:px-14">
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="space-y-4"
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="space-y-10"
         >
-          <h2 className="text-2xl font-bold md:text-3xl max-w-md">
-            Stay Updated on the Newest Blogs for your Success
-          </h2>
-          <p className="max-w-xl text-base text-white/70">
-            Subscribe to our newsletter, so you can get every latest article and
-            information about us every week.
-          </p>
-          <SubscribeForm
-            className="mt-6 max-w-md"
-            inputClassName="bg-white"
-            buttonClassName="bg-[#EE4312] text-white hover:bg-[#cf3a10]"
-          />
+          <div className="space-y-6">
+            <div className="inline-flex items-center gap-2 text-orange-500 font-bold uppercase tracking-widest text-xs">
+              <Sparkles className="size-4" />
+              Join the Community
+            </div>
+            <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1]">
+              Stay Ahead with the <span className="text-orange-500 italic font-serif">Latest</span> Insights.
+            </h2>
+            <p className="max-w-xl text-lg text-slate-300 leading-relaxed font-medium">
+              Subscribe to our newsletter and receive curated articles on leadership, 
+              recruitment strategy, and market trends directly in your inbox.
+            </p>
+          </div>
+
+          <div className="max-w-md">
+            <SubscribeForm 
+              variant="dark"
+              buttonClassName="bg-[#EE4312] hover:bg-[#cf3a10]"
+            />
+          </div>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.2 }}
           className="relative"
         >
-          <div className="relative overflow-hidden">
+          <div className="relative z-10 overflow-hidden">
             <Image
               src="/assets/blogs-cta.svg"
-              alt="Newsletter updates"
+              alt="Updates"
               width={560}
               height={360}
               className="h-auto w-full object-cover"

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, use } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
@@ -28,8 +28,10 @@ type JobMeta = {
 export default function JobApplicationsPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id: jobId } = use(params);
+
   const router = useRouter();
   const [job, setJob] = useState<JobMeta | null>(null);
   const [applications, setApplications] = useState<JobApplication[]>([]);
@@ -41,7 +43,7 @@ export default function JobApplicationsPage({
       const { data: jobData, error: jobError } = await supabase
         .from("jobs")
         .select("title")
-        .eq("id", params.id)
+        .eq("id", jobId)
         .single();
 
       if (jobError || !jobData) {
@@ -55,11 +57,31 @@ export default function JobApplicationsPage({
         .select(
           "id, first_name, last_name, email, phone, country, resume_url, cover_letter, created_at"
         )
-        .eq("job_id", params.id)
+        .eq("job_id", jobId)
         .order("created_at", { ascending: false });
 
       if (error) {
-        toast.error("Unable to fetch applications.");
+        if (error.code === "42703" && error.message?.includes("cover_letter")) {
+          const { data: fallbackData, error: fallbackError } = await supabase
+            .from("job_applications")
+            .select(
+              "id, first_name, last_name, email, phone, country, resume_url, created_at"
+            )
+            .eq("job_id", jobId)
+            .order("created_at", { ascending: false });
+
+          if (fallbackError) {
+            toast.error("Unable to fetch applications.");
+          } else {
+            const normalized = (fallbackData ?? []).map((row) => ({
+              ...row,
+              cover_letter: null,
+            }));
+            setApplications(normalized);
+          }
+        } else {
+          toast.error("Unable to fetch applications.");
+        }
       } else {
         setApplications(data ?? []);
       }
@@ -69,7 +91,7 @@ export default function JobApplicationsPage({
     };
 
     fetchApplications();
-  }, [params.id]);
+  }, [jobId]);
 
   return (
     <motion.div

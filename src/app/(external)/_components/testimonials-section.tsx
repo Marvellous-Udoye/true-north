@@ -1,151 +1,141 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronLeft, ChevronRight, Quote, Star } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 const testimonials = [
   {
     name: "Heimlin Marka",
-    title: "Informatics Engineering",
+    title: "Executive Director",
     quote:
-      "Working with this consulting firm was a game-changer for our business. Their strategic insights transformed our approach and boosted our success.",
+      "Working with TrueNorth was a game-changer for our business. Their strategic insights transformed our approach and boosted our success.",
     avatar: "/assets/hero-img.svg",
-    rating: 5,
   },
   {
     name: "Karmel Otto",
     title: "Accountant & Finance Manager",
     quote:
-      "Exceptional service! The consulting firm navigated us through challenges with precision, delivering impactful strategies that led to tangible results.",
+      "Exceptional service! The team navigated us through challenges with precision, delivering impactful strategies that led to tangible results.",
     avatar: "/assets/hero-img.svg",
-    rating: 5,
   },
   {
     name: "Karnie Rose",
     title: "Project Coordinator",
     quote:
-      "The consulting team demonstrated depth and insight, guiding us toward effective decisions and improved outcomes.",
+      "The consulting team demonstrated depth and insight, guiding us toward effective decisions and significantly improved outcomes.",
     avatar: "/assets/hero-img.svg",
-    rating: 5,
   },
 ];
 
 export function TestimonialsSection() {
   const [index, setIndex] = useState(0);
-  const total = testimonials.length;
-
-  const visibleTestimonials = [
-    testimonials[index % total],
-    testimonials[(index + 1) % total],
-    testimonials[(index + 2) % total],
-  ];
 
   const handlePrev = () => {
-    setIndex((prev) => (prev - 1 + total) % total);
+    setIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
 
   const handleNext = () => {
-    setIndex((prev) => (prev + 1) % total);
+    setIndex((prev) => (prev + 1) % testimonials.length);
   };
 
   return (
-    <section
-      id="testimonials"
-      className="relative overflow-hidden bg-[#f7f9fc] py-16 md:py-20"
-    >
-      <div
-        className="pointer-events-none absolute right-0 top-0 h-40 w-64 opacity-70"
-        style={{
-          backgroundImage: "url('/assets/testimonials-bg.svg')",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "right top",
-        }}
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute bottom-0 left-0 h-12 sm:h-40 w-64 opacity-70"
-        style={{
-          backgroundImage: "url('/assets/offer-bg.svg')",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "left bottom",
-        }}
-        aria-hidden="true"
-      />
-      <div className="relative mx-auto flex max-w-7xl flex-col gap-10 px-4 md:px-10 lg:px-14">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <div className="space-y-3">
-            <h2 className="text-2xl font-bold text-primary md:text-3xl">
-              See What Clients Are Saying
-            </h2>
-            <p className="max-w-2xl text-base text-muted-foreground">
-              Explore the authentic sentiments and experiences of our clients as
-              they share their thoughts and satisfaction.
-            </p>
-          </div>
-          <div className="flex items-center gap-3">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={handlePrev}
-              aria-label="Previous testimonial"
-              className="border-primary/20 text-primary hover:bg-primary/10"
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={handleNext}
-              aria-label="Next testimonial"
-              className="border-primary/20 text-primary hover:bg-primary/10"
-            >
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-3">
-          {visibleTestimonials.map((testimonial, cardIndex) => (
-            <motion.div
-              key={`${testimonial.name}-${cardIndex}`}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.6 }}
-              className={cardIndex === 0 ? "" : "hidden md:block"}
-            >
-              <div className="flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-sm">
-                <div className="flex-1 px-6 py-6 text-base text-muted-foreground">
-                  <Quote className="size-6 mb-4 text-[#EE4312]" />
-                  {testimonial.quote}
-                </div>
-                <div className="flex items-center justify-between bg-[#EE4312] p-6 text-white">
-                  <div className="flex items-center gap-3">
-                    <div className="h-12 w-12 overflow-hidden rounded-full border-2 border-white/70">
-                      <Image
-                        src={testimonial.avatar}
-                        alt={testimonial.name}
-                        width={48}
-                        height={48}
-                        className="h-full w-full object-cover"
-                      />
-                    </div>
-                    <div>
-                      <p className="text-sm font-semibold mb-1">
-                        {testimonial.name}
-                      </p>
-                      <p className="text-xs text-white/80">
-                        {testimonial.title}
-                      </p>
-                    </div>
-                  </div>
-                </div>
+    <section id="testimonials" className="relative overflow-hidden bg-slate-50 py-20 lg:py-32">
+      <div className="mx-auto max-w-7xl px-4 md:px-10 lg:px-14">
+        
+        <div className="flex flex-col lg:flex-row gap-16 items-center">
+          
+          <div className="lg:w-1/3 space-y-8 text-center lg:text-left">
+            <div className="space-y-4">
+              <div className="inline-flex items-center gap-2 text-primary font-bold uppercase tracking-widest text-xs">
+                <div className="h-px w-8 bg-primary" />
+                Client Stories
               </div>
-            </motion.div>
-          ))}
+              <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.1]">
+                Real Voices, Real <span className="text-primary italic font-serif">Impact.</span>
+              </h2>
+              <p className="text-lg text-slate-500 font-medium leading-relaxed">
+                Explore the authentic experiences of our partners as they share 
+                the results of our collaborative journey.
+              </p>
+            </div>
+
+            <div className="flex items-center justify-center lg:justify-start gap-4 pt-4">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={handlePrev}
+                className="size-14 rounded-2xl border-slate-200 bg-white transition-all hover:bg-primary hover:text-white hover:border-primary"
+              >
+                <ChevronLeft className="size-6" />
+              </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={handleNext}
+                className="size-14 rounded-2xl border-slate-200 bg-white transition-all hover:bg-primary hover:text-white hover:border-primary"
+              >
+                <ChevronRight className="size-6" />
+              </Button>
+            </div>
+          </div>
+
+          <div className="lg:w-2/3 w-full relative">
+            <div className="grid gap-6 md:grid-cols-2">
+              <AnimatePresence mode="wait">
+                {[0, 1].map((offset) => {
+                  const itemIndex = (index + offset) % testimonials.length;
+                  const item = testimonials[itemIndex];
+                  
+                  return (
+                    <motion.div
+                      key={`${item.name}-${itemIndex}`}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      transition={{ duration: 0.5, delay: offset * 0.1 }}
+                      className={cn(
+                        "rounded-[2.5rem] border border-slate-200 bg-white p-10 flex flex-col gap-8 transition-all duration-300 hover:border-primary/20",
+                        offset === 1 ? "hidden md:flex" : "flex"
+                      )}
+                    >
+                      <div className="flex items-center gap-1">
+                        {[1, 2, 3, 4, 5].map((s) => (
+                          <Star key={s} className="size-4 fill-orange-500 text-orange-500" />
+                        ))}
+                      </div>
+
+                      <div className="flex-1">
+                        <Quote className="size-10 mb-6 text-slate-100 fill-slate-100" />
+                        <p className="text-xl font-medium text-slate-600 leading-relaxed italic">
+                          &ldquo;{item.quote}&rdquo;
+                        </p>
+                      </div>
+
+                      <div className="flex items-center gap-4 pt-6 border-t border-slate-50">
+                        <div className="size-12 rounded-2xl overflow-hidden bg-slate-100 border-2 border-white grayscale">
+                          <Image
+                            src={item.avatar}
+                            alt={item.name}
+                            width={48}
+                            height={48}
+                            className="h-full w-full object-cover"
+                          />
+                        </div>
+                        <div>
+                          <p className="font-black text-slate-900 leading-none">{item.name}</p>
+                          <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mt-1">{item.title}</p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </AnimatePresence>
+            </div>
+          </div>
         </div>
       </div>
     </section>
